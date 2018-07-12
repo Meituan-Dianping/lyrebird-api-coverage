@@ -1,0 +1,27 @@
+{
+  "business": "app_channel",
+  "version_code": 1,
+  "version_name": "1.0",
+  "api_list": [
+    {
+      "desc": "A接口",
+      "priority": 3,
+      "url": "meituan.com/test/a"
+    },
+    {
+      "desc": "B接口",
+      "priority": 2,
+      "url": "meituan.com/test/b"
+    },
+    {
+      "desc": "C接口",
+      "priority": 2,
+      "url": "meituan.com/test/c"
+    },
+    {
+      "desc": "D接口",
+      "priority": 1,
+      "url": "meituan.com/test/d"
+    }
+  ]
+}

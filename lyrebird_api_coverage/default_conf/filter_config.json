@@ -1,0 +1,14 @@
+{
+  "exclude": {
+    "host": [
+      "a.meituan.com",
+      "b.baidu.com"
+    ],
+    "regular": [
+      ".webp",
+      ".gif",
+      ".jpg",
+      ".png"
+    ]
+  }
+}
