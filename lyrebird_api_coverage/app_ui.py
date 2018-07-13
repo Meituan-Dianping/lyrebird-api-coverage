@@ -165,3 +165,6 @@ class AppUI(lyrebird.PluginView):
 
     def get_icon(self):
         return 'fa fa-fw fa-lightbulb-o'
+
+    def get_title(self):
+        return 'APICoverage'
