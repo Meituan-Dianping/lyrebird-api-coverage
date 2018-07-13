@@ -81,9 +81,9 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 
-# 使用IDE打开工程（推荐Pycharm或vscode）
+# 使用IDE打开工程（推荐Pycharm或vscode）
 
-# 在IDE中执行debug.py即可开始调试
+# 在IDE中执行debug.py即可开始调试
 ```
 
 
