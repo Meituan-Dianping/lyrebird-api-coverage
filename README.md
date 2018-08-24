@@ -1,5 +1,7 @@
 # Lyrebird Plugin API-Coverage
 
+[![Build Status](https://travis-ci.org/meituan/lyrebird-api-coverage.svg?branch=master)](https://travis-ci.org/meituan/lyrebird-api-coverage)
+
 ## 简介
 * API-Coverage是基于[Lyrebird](https://github.com/meituan/lyrebird)的插件，为客户端提供API维度测试覆盖评估方法。 
 * 客户端的操作可以实时反应在前端页面上，主要有API覆盖率统计、不同优先级的覆盖率展示等。可以参考该数据，判断测试是否已覆盖目标功能。
@@ -29,7 +31,7 @@ pip3 install lyrebird-api-coverage
 lyrebird
 ```
 
-## 界面说明
+## 界面说明
 
 <img src="./images/introduce.png" style="width:800px">
 
