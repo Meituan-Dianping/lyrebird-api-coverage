@@ -8,7 +8,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='lyrebird-api-coverage',
-    version='0.2.1',
+    version='0.2.2',
     packages=['lyrebird_api_coverage'],
     url='https://github.com/meituan/lyrebird-api-coverage',
     author='HBQA',
