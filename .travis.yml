@@ -11,7 +11,7 @@ jobs:
         - pip install .
       # command to run tests
       script: pytest
-        
+             
     - stage: release to pypi
       if: type = push
       language: python
