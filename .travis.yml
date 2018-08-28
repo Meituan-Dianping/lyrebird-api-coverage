@@ -27,5 +27,4 @@ jobs:
           secure: "iGWxolH0FRgklyoN4W75oIhDbv5iBDSqU89dt9gA2abvZR4yPmcJ/LavGLVSt0YtT84uDaRpyRvk+VANfT0viJiRhDIBUpMloUPAaj4oBTS+Pa7x7LSWUQMLy3DvVUPzSejJ5bZ34fhJXejwm+shmLKf9vS1Vw0GNl69tFyr73DalixyF9Rkvoi2qFmXQnN1tP2WN1MeD6FbITibx2h0vwutWJFoHslh+Q3zKt+C0MJ6zcCi40YhEkAsbGYMpDU+08WSqUgfYPA+x3htXF4MoJ01AwaT1lj9zC2T0eAPloZxqRCCJ2Lc12pBLsxH3VoDsjqk43RGUbBmon2dr1WZVKh9KHElsa/ZBWiXycQO4w02tRWnd2olyRehwGZSX5Xyl4Rln9JZTomAGscPkNVCBQSH0Kjw/HBEF9Dg2jtuB6xuDYdaLJhzROMpsIKZ3CPLpoYySeHyfocDG4VMffVzB+JSD4V9aAwOhWKoSJCYt/X9vepM+iYNSOHTPXJ1NcSChSFpXarXq+Pblh9t7Db0BU1yOLzOZRWB5PuZm0a01R/ie8/0reF2Z/6SICrhl5fkNgM5xVWO/vM0hLvbJeEwykBixXRUw4m/8QekeIMj48C6KcgCjBtcAJ26VreFCIgDNsckU0w+0vBzFhM4aBiixgMZ0nS5M7h9uMBKzRpa5fU="
         on:
           tags: true
-        server: https://test.pypi.org/legacy/
       
