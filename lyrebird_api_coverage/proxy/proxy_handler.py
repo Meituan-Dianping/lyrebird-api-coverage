@@ -1,4 +1,5 @@
 import lyrebird
+from lyrebird.log import get_logger
 from flask import Response
 from lyrebird import HandlerContext
 
@@ -37,7 +38,7 @@ class MyDataHandler:
         if not app_context.base_list:
             base_dict = BaseDataHandler().get_base_source()
             if isinstance(base_dict, Response):
-                lyrebird.get_logger().error('API-Coverage base file is None.')
+                get_logger().error('API-Coverage base file is None.')
             else:
                 mergeAlgorithm.first_result_handler(base_dict)
 

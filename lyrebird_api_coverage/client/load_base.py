@@ -2,6 +2,7 @@ import codecs
 import hashlib
 import json
 import lyrebird
+from lyrebird.log import get_logger
 import os
 
 from lyrebird_api_coverage.client.context import app_context
@@ -24,7 +25,7 @@ def auto_load_base():
     # 读取指定base文件，写入到base.json
     if lyrebird_conf.get('hunter.base'):
         base_path = lyrebird_conf.get('hunter.base')
-        base = codecs.open(os.path.join(PLUGINS_CONF_DIR, base_path), 'r', 'utf-8').read()
+        base = codecs.open(base_path, 'r', 'utf-8').read()
         f = codecs.open(DEFAULT_BASE, 'w', 'utf-8')
         f.write(base)
         f.close()
@@ -34,7 +35,7 @@ def auto_load_base():
     elif not os.path.exists(DEFAULT_BASE):
         copy_file(DEFAULT_BASE)
     if not codecs.open(DEFAULT_BASE, 'r', 'utf-8').read():
-        lyrebird.get_logger().error('Base is None.Please check your base file of API-Coverage.')
+        get_logger().error('Base is None.Please check your base file of API-Coverage.')
     else:
         json_obj = json.loads(codecs.open(DEFAULT_BASE, 'r', 'utf-8').read())
         app_context.base_sha1 = get_file_sha1(DEFAULT_BASE)
