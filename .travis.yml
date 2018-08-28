@@ -24,7 +24,7 @@ jobs:
         provider: pypi
         user: Addison_Gao
         password:
-          secure: "Ch/Y0cA3YO/IUlCdPqStKqD9ciS9ITUXOuUJQIo/hIuQwnme7KUEjvNc9GvOCvweUCH2ndN5iiByro6b4H3BEQ8EVUdRPtllh72TSxqxQYTT/6XRPLHRwvBZOne8C9AaMuORBX9dH2K4amfT+Mw3iBbRqta10Vy2PwBg+lBu/RamB//NOUuH1hv/7gCYuuugLz7PFW5tWNZx+8Quv8S/HkN8DjwLqhP/h6pTVbgeLAiW3OoqSEHMnO49HC5NxwbgXb6NsEg+XZabnuVgo2Uxjn+LSAAQTYpjLa/or+w0XIukFVdZMNw7C+E+tScDYRbumuCLpeqrxDSshVQcl3YLyKdgQyyWMmvjF5ZvcXH/gG4GUtJ2OwGuR31ZeVkJP3llYcmd2t69VEAfAApE3gZO9pwMjl4ahOBht6+k5HaRYKONs4L/AKRxSfL94J86VG3OrHni1H9Fdb3wAqqC1DyZTLLdF1gUYpEqJ5CX5/3JN86w9U4IvVYPtK1bulzsAOPmbwfb8rIXwxHIvZBEQBtSeXjq7cBOwMPg8ns8Suqe1X1WVrhpYMXqFakzxKxV5sCkh1oAW+KbXdCrcuxjZb8YsnJHBqhu2e+tnkTNhI2e4/zktPgUaU1jVpFVG3+uk5Q94MSErfx2C/xWMPNBbR0n5lqQMast+5dYf3IiGj07kBY="
+          secure: "iGWxolH0FRgklyoN4W75oIhDbv5iBDSqU89dt9gA2abvZR4yPmcJ/LavGLVSt0YtT84uDaRpyRvk+VANfT0viJiRhDIBUpMloUPAaj4oBTS+Pa7x7LSWUQMLy3DvVUPzSejJ5bZ34fhJXejwm+shmLKf9vS1Vw0GNl69tFyr73DalixyF9Rkvoi2qFmXQnN1tP2WN1MeD6FbITibx2h0vwutWJFoHslh+Q3zKt+C0MJ6zcCi40YhEkAsbGYMpDU+08WSqUgfYPA+x3htXF4MoJ01AwaT1lj9zC2T0eAPloZxqRCCJ2Lc12pBLsxH3VoDsjqk43RGUbBmon2dr1WZVKh9KHElsa/ZBWiXycQO4w02tRWnd2olyRehwGZSX5Xyl4Rln9JZTomAGscPkNVCBQSH0Kjw/HBEF9Dg2jtuB6xuDYdaLJhzROMpsIKZ3CPLpoYySeHyfocDG4VMffVzB+JSD4V9aAwOhWKoSJCYt/X9vepM+iYNSOHTPXJ1NcSChSFpXarXq+Pblh9t7Db0BU1yOLzOZRWB5PuZm0a01R/ie8/0reF2Z/6SICrhl5fkNgM5xVWO/vM0hLvbJeEwykBixXRUw4m/8QekeIMj48C6KcgCjBtcAJ26VreFCIgDNsckU0w+0vBzFhM4aBiixgMZ0nS5M7h9uMBKzRpa5fU="
         on:
           tags: true
         server: https://test.pypi.org/legacy/
