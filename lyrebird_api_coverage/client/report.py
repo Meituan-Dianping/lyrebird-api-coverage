@@ -30,5 +30,5 @@ report_handler = ReportHandler()
 
 def report_worker(url, device_ip):
     update_data = report_handler.check_url_info(url, device_ip)
-    update_data.update({"reporter": "lyrebird.hunter", "user_info": app_context.user_info})
+    update_data.update({"action": "api-coverage", "user_info": app_context.user_info})
     report(update_data)
