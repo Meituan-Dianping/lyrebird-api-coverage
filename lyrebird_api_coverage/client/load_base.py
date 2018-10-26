@@ -34,12 +34,13 @@ def auto_load_base():
     # 通过本地默认base文件获取base
     elif not os.path.exists(DEFAULT_BASE):
         copy_file(DEFAULT_BASE)
-    if not codecs.open(DEFAULT_BASE, 'r', 'utf-8').read():
-        get_logger().error('Base is None.Please check your base file of API-Coverage.')
-    else:
-        json_obj = json.loads(codecs.open(DEFAULT_BASE, 'r', 'utf-8').read())
-        app_context.base_sha1 = get_file_sha1(DEFAULT_BASE)
-        return json_obj
+    with codecs.open(DEFAULT_BASE,'r','utf-8') as f:
+        if f.read():
+            json_obj = json.loads(f.read())
+            app_context.base_sha1 = get_file_sha1(DEFAULT_BASE)
+            return json_obj
+        else:
+            get_logger().error('Base is None.Please check your base file of API-Coverage.')
 
 
 def copy_file(target_path):
