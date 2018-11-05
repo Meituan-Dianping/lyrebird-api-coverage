@@ -1,16 +1,16 @@
 from lyrebird_api_coverage.client.url_compare import compare_query
 
 
-base_url1 = "apitrip.meituan.com/freetour?a=b&b=&c="
-base_url2 = "apitrip.meituan.com/freetour?a=&c=&b="
-base_url3 = "apitrip.meituan.com/freetour?a=b&b=c&c="
-base_url4 = "apitrip.meituan.com/freetour?a=b&b=c&c=e"
-base_url5 = "apitrip.meituan.com/freetour?a=b&b="
-req_url_1 = "http://apitrip.meituan.com/freetour?a=b&c=e&b=d"
-req_url_2 = "http://apitrip.meituan.com/freetour?a=c&b=d&c=e"
-req_url_3 = "http://apitrip.meituan.com/freetour?a=b&b=c"
-req_url_4 = "http://apitrip.meituan.com/freetour?a=b&b=c&c="
-req_url_5 = "http://apitrip.meituan.com/freetour?a=b&b=&c=e&f=q"
+base_url1 = "abc.test.com/test?a=b&b=&c="
+base_url2 = "abc.test.com/test?a=&c=&b="
+base_url3 = "abc.test.com/test?a=b&b=c&c="
+base_url4 = "abc.test.com/test?a=b&b=c&c=e"
+base_url5 = "abc.test.com/test?a=b&b="
+req_url_1 = "http://abc.test.com/test?a=b&c=e&b=d"
+req_url_2 = "http://abc.test.com/test?a=c&b=d&c=e"
+req_url_3 = "http://abc.test.com/test?a=b&b=c"
+req_url_4 = "http://abc.test.com/test?a=b&b=c&c="
+req_url_5 = "http://abc.test.com/test?a=b&b=&c=e&f=q"
 
 
 def test_compare():
