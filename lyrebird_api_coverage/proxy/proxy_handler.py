@@ -32,7 +32,7 @@ class MyDataHandler:
         path = format_url.format_api(short_url).lower()
         # 获取handler_context.id，为前端展开看详情准备
         path_id = handler_context.id
-        device_ip = handler_context.request.headers.get('lyrebird.device.ip')
+        device_ip = handler_context.client_address
 
         # 当请求过来的时候，base还没有init，需要进行init处理
         if not app_context.base_list:
