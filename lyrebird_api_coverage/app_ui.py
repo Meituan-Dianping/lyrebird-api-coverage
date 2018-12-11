@@ -13,6 +13,9 @@ from lyrebird_api_coverage.handlers.filter_handler import FilterHandler
 from lyrebird_api_coverage.handlers.import_file_handler import ImportHandler
 from lyrebird_api_coverage.handlers.result_handler import ResultHandler, PLUGINS_DUMP_DIR
 from lyrebird import context
+import io
+import gzip
+import time
 
 
 class AppUI(lyrebird.PluginView):
@@ -43,40 +46,28 @@ class AppUI(lyrebird.PluginView):
 
     # 获取init base数据 以及 测试缓存数据 API
     def get_test_data(self):
+        starttime = time.time()
         # 获取app_context里面缓存的测试数据
         # 如果内存为空，则视为首次进入该页面
-        data = app_context.merge_list
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.first_result_handler(base_dict)
-                resp = jsonify({'test_data': app_context.merge_list})
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify({'test_data': app_context.merge_list})
+        resp = jsonify({'test_data': app_context.merge_list})
+        gzip_buffer = io.BytesIO()
+        zbuf = io.StringIO()
+        gzip_file = gzip.GzipFile(
+            mode='wb',
+            compresslevel=4,
+            fileobj=gzip_buffer
+        )
+        gzip_file.write(resp.data)
+        gzip_file.close()
+        gzip_data = gzip_buffer.getvalue()
+        resp.headers['Content-Encoding'] = 'gzip'
+        resp.headers['Content-Length'] = str(len(gzip_data))
+        resp.data = gzip_data
+        print(time.time() - starttime)
         return resp
 
     def get_coverage(self):
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        data = app_context.coverage
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.coverage_arithmetic(base_dict)
-                resp = jsonify(app_context.coverage)
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify(app_context.coverage)
-        return resp
+        return jsonify(app_context.coverage)
 
     def save_result(self):
         # 传入文件名
@@ -129,6 +120,14 @@ class AppUI(lyrebird.PluginView):
                         'version_code': app_context.version_code})
 
     def on_create(self):
+
+        # 获取base_data_config文件信息
+        base_dict = BaseDataHandler().get_base_source()
+        # 如果import的文件异常
+        if not isinstance(base_dict, Response):
+            mergeAlgorithm.first_result_handler(base_dict)
+            mergeAlgorithm.coverage_arithmetic(base_dict)
+        
         # 设置模板目录（可选，设置模板文件目录。默认值templates）
         self.set_template_root('lyrebird_api_coverage')
         # 设置静态文件目录（可选，设置静态文件目录。默认值static）

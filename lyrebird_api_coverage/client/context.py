@@ -31,6 +31,8 @@ class Context:
         self.version_code = None
         # user_info
         self.user_info = {}
+        # 记录请求最后的时间，避免频繁emit io消息
+        self.endtime = 0
 
 
 # 单例模式

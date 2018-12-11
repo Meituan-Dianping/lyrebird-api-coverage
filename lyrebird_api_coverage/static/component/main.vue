@@ -16,7 +16,6 @@
 <script>
 //websocket namespace /api_coverage
 let apicoverageIO = io("/api_coverage");
-let timer = null;
 
 module.exports = {
   mounted: function() {
@@ -28,15 +27,7 @@ module.exports = {
       loadCoverageData();
     });
     apicoverageIO.on("test_data message", function(msg) {
-      console.log(msg);
       loadDetailData();
-      if (!timer) {
-        timer = setTimeout(() => {
-          loadDetailData();
-          clearTimeout(timer);
-          timer = null;
-        }, 1000);
-      }
     });
   },
   data: function() {
@@ -46,9 +37,6 @@ module.exports = {
       showedAPIData: [], //搜索出的数据
       targetContext: null
     };
-  },
-  updated: function() {
-    console.log("init");
   },
   methods: {
     loadCoverageData: function() {

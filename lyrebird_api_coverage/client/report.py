@@ -8,12 +8,13 @@ ps:需要在lyrebird中设定reporter相关配置
 
 class ReportHandler:
     def check_url_info(self, url, device_ip):
-        specific_data = list(filter(lambda x: x.get('url') == url, app_context.merge_list))[0]
-        desc = specific_data.get('desc')
-        if specific_data.get('status') == 1:
+        specific_list = list(filter(lambda x: x.get('url') == url, app_context.merge_list))
+        if specific_list and specific_list[0].get('status') == 1:
+            desc = specific_list[0].get('desc')
             count_flag = 1
-            priority = specific_data.get('priority')
+            priority = specific_list[0].get('priority')
         else:
+            desc = 'N/A'
             count_flag = -1
             priority = -1
         info_dict = {'url': url, 'desc': desc, 'priority': priority, 'count_flag': count_flag,
