@@ -28,10 +28,10 @@ class AppUI(lyrebird.PluginView):
         yield rtext
 
     def get_test_data(self):
-        return Response(stream_with_context(self.generate({'test_data': app_context.merge_list})))
+        return Response(stream_with_context(self.generate({'test_data': app_context.merge_list})), content_type='application/json')
 
     def get_coverage(self):
-        return Response(stream_with_context(self.generate(app_context.coverage)))
+        return Response(stream_with_context(self.generate(app_context.coverage)), content_type='application/json')
 
     def save_result(self):
         # 传入文件名
