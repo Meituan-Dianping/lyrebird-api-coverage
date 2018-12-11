@@ -13,8 +13,6 @@ from lyrebird_api_coverage.handlers.filter_handler import FilterHandler
 from lyrebird_api_coverage.handlers.import_file_handler import ImportHandler
 from lyrebird_api_coverage.handlers.result_handler import ResultHandler, PLUGINS_DUMP_DIR
 from lyrebird import context
-import io
-import gzip
 import time
 
 
