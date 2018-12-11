@@ -43,14 +43,14 @@ class MyDataHandler:
             mergeAlgorithm.coverage_handler()
             # 进行上报
             report_worker(path, device_ip)
-            # 计算差值，1s内只发1次io msg，限制刷新频率
+            # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
             duration = req_starttime - app_context.endtime
-            if duration > 1:
+            if duration > app_context.timer:
                 app_context.endtime = time.time()
                 lyrebird.emit('test_data message', path, namespace='/api_coverage')
 
         # 如果path配置了对应的参数
-        elif path in list(app_context.path_param_dic.keys()):
+        elif path in app_context.path_param_dic:
             ulr_list = app_context.path_param_dic[path]
             flag = 0
             for item in ulr_list:
@@ -77,9 +77,9 @@ class MyDataHandler:
                 mergeAlgorithm.coverage_handler()
                 report_worker(url_pgroup, device_ip)
             
-            # 计算差值，1s内只发1次io msg，限制刷新频率
+            # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
             duration = req_starttime - app_context.endtime
-            if duration > 1:
+            if duration > app_context.timer:
                 app_context.endtime = time.time()
                 lyrebird.emit('test_data message', path, namespace='/api_coverage')
         

@@ -2,7 +2,7 @@ import json
 
 import lyrebird
 import os
-from flask import request, jsonify, Response
+from flask import request, jsonify, Response, stream_with_context
 from lyrebird_api_coverage.client.context import app_context
 
 from lyrebird_api_coverage.client import context
@@ -46,25 +46,11 @@ class AppUI(lyrebird.PluginView):
 
     # 获取init base数据 以及 测试缓存数据 API
     def get_test_data(self):
-        starttime = time.time()
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        resp = jsonify({'test_data': app_context.merge_list})
-        gzip_buffer = io.BytesIO()
-        zbuf = io.StringIO()
-        gzip_file = gzip.GzipFile(
-            mode='wb',
-            compresslevel=4,
-            fileobj=gzip_buffer
-        )
-        gzip_file.write(resp.data)
-        gzip_file.close()
-        gzip_data = gzip_buffer.getvalue()
-        resp.headers['Content-Encoding'] = 'gzip'
-        resp.headers['Content-Length'] = str(len(gzip_data))
-        resp.data = gzip_data
-        print(time.time() - starttime)
-        return resp
+        def generate():
+            result = {'test_data': app_context.merge_list}
+            rtext = json.dumps(result)
+            yield rtext
+        return Response(stream_with_context(generate()))
 
     def get_coverage(self):
         return jsonify(app_context.coverage)
@@ -94,7 +80,7 @@ class AppUI(lyrebird.PluginView):
     def get_filter_conf(self):
         msg = FilterHandler().get_filer_conf()
         # 如果返回的string包含报错信息，则是报错
-        if "筛除配置文件有误" in msg:
+        if isinstance(msg, str):
             return context.make_fail_response(msg)
         else:
             return jsonify(msg)
