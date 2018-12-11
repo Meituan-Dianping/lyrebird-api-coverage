@@ -10,6 +10,7 @@ from lyrebird_api_coverage.client.merge_algorithm import mergeAlgorithm
 from lyrebird_api_coverage.client.report import report_worker
 from lyrebird_api_coverage.client.url_compare import compare_query
 from lyrebird_api_coverage.handlers.base_source_handler import BaseDataHandler
+import time
 
 
 """
@@ -23,6 +24,7 @@ class MyDataHandler:
     # self.user_list = []
 
     def handle(self, handler_context: HandlerContext):
+        req_starttime = time.time()
         # UI自动化等需要mock的手段orgin url 需要调用这个方法
         org_url = handler_context.get_origin_url()
         if not org_url:
@@ -34,36 +36,24 @@ class MyDataHandler:
         path_id = handler_context.id
         device_ip = handler_context.client_address
 
-        # 当请求过来的时候，base还没有init，需要进行init处理
-        if not app_context.base_list:
-            base_dict = BaseDataHandler().get_base_source()
-            if isinstance(base_dict, Response):
-                get_logger().error('API-Coverage base file is None.')
-            else:
-                mergeAlgorithm.first_result_handler(base_dict)
-
         if path in app_context.base_list:
             # merge到 context merge list中
             mergeAlgorithm.merge_handler_new(path, path_id)
             # 在base里的需要去计算下覆盖率
             mergeAlgorithm.coverage_handler()
-            # path传给覆盖详情表格
-            lyrebird.emit('test_data message', path, namespace='/api_coverage')
-            # 如果设备信息抓取到,进行上报
-            # if device_ip in app_context.info:
+            # 进行上报
             report_worker(path, device_ip)
+            # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
+            self.emit(req_starttime, path)
 
         # 如果path配置了对应的参数
-        if path in list(app_context.path_param_dic.keys()):
+        elif path in app_context.path_param_dic:
             ulr_list = app_context.path_param_dic[path]
             flag = 0
             for item in ulr_list:
                 if compare_query(item['url'], handler_context.request.url):
                     mergeAlgorithm.merge_handler_new(item['url_base'], path_id)
                     mergeAlgorithm.coverage_handler()
-                    lyrebird.emit('test_data message', item['url_base'], namespace='/api_coverage')
-                    # 如果设备信息抓取到,进行上报
-                    # if device_ip in app_context.info:
                     report_worker(item['url_base'], device_ip)
                     flag = 1
             # 如果参数组合不存在，提取关注的字段
@@ -82,21 +72,21 @@ class MyDataHandler:
 
                 mergeAlgorithm.merge_handler_new(url_pgroup, path_id)
                 mergeAlgorithm.coverage_handler()
-                lyrebird.emit('test_data message', url_pgroup, namespace='/api_coverage')
-                # 如果设备信息抓取到,进行上报
-                # if device_ip in app_context.info:
                 report_worker(url_pgroup, device_ip)
+            
+            # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
+            self.emit(req_starttime, path)
+        
 
-        # 如果不在base里，需要判断这些API是否被筛掉
+        # 如果不在base里，不需要merge到数据中
         else:
-            # 如果不在筛除列表内，才进行merge等一系列算法
-            if not Filter().filter_all(path):
-                # merge到 context merge list中
-                mergeAlgorithm.merge_handler_new(path, path_id)
-                # 传给api_coverage前端的socket信息
-                lyrebird.emit('test_data message', path, namespace='/api_coverage')
-                # 如果设备信息抓取到,进行上报
-                # if device_ip in app_context.info:
-                report_worker(path, device_ip)
-            else:
-                pass
+            # mergeAlgorithm.merge_handler_new(path, path_id)
+            # 进行上报
+            report_worker(path, device_ip)
+
+
+    def emit(self, starttime, path):
+        duration = starttime - app_context.endtime
+        if duration > app_context.SOCKET_PUSH_INTERVAL:
+            app_context.endtime = starttime
+            lyrebird.emit('test_data message', path, namespace='/api_coverage')

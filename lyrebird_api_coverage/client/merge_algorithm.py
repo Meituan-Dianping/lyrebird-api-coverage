@@ -1,8 +1,7 @@
 import lyrebird
-
 from lyrebird_api_coverage.client import format_url
-
 from lyrebird_api_coverage.client.context import app_context
+import time
 
 
 class MergeAlgorithm:
@@ -103,10 +102,13 @@ class MergeAlgorithm:
             coverage = round(test_len / app_context.coverage['len'] * 100, 2)
         # 为了传给Overbridge的socket信息format数据格式
         app_context.coverage['total'] = coverage
+        # 覆盖率有变化才emit & publish 覆盖率的变化消息给API-Coverage前端，overbridge前端，和消息总线
         if not history_coverage == coverage:
-            # 覆盖率有变化才emit & publish 覆盖率的变化消息给API-Coverage前端，overbridge前端，和消息总线
-            lyrebird.emit('update', app_context.coverage, namespace='/charts')
-            lyrebird.emit('coverage message', app_context.coverage.get('total'), namespace='/api_coverage')
+            handler_time = time.time()
+            # 限制频繁emit io msg，在两次之间大于指定时间间隔才会emit
+            if handler_time - app_context.covtime > app_context.SOCKET_PUSH_INTERVAL:
+                lyrebird.emit('coverage message', app_context.coverage.get('total'), namespace='/api_coverage')
+                app_context.covtime = handler_time
             by_priority = [p.get('value') for p in app_context.coverage['priorities']]
             lyrebird.publish('coverage', 
                 dict(

@@ -2,7 +2,7 @@ import json
 
 import lyrebird
 import os
-from flask import request, jsonify, Response
+from flask import request, jsonify, Response, stream_with_context
 from lyrebird_api_coverage.client.context import app_context
 
 from lyrebird_api_coverage.client import context
@@ -13,6 +13,7 @@ from lyrebird_api_coverage.handlers.filter_handler import FilterHandler
 from lyrebird_api_coverage.handlers.import_file_handler import ImportHandler
 from lyrebird_api_coverage.handlers.result_handler import ResultHandler, PLUGINS_DUMP_DIR
 from lyrebird import context
+import time
 
 
 class AppUI(lyrebird.PluginView):
@@ -22,61 +23,15 @@ class AppUI(lyrebird.PluginView):
         """
         return self.render_template('index.html')
 
-    def get_coverage_data(self):
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        data = app_context.merge_list
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.first_result_handler(base_dict)
-                mergeAlgorithm.coverage_arithmetic(base_dict)
-                resp = jsonify({'test_data': app_context.merge_list, 'coverage': app_context.coverage})
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify({'test_data': app_context.merge_list, 'coverage': app_context.coverage})
-        return resp
+    def generate(self, data):
+        rtext = json.dumps(data)
+        yield rtext
 
-    # 获取init base数据 以及 测试缓存数据 API
     def get_test_data(self):
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        data = app_context.merge_list
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.first_result_handler(base_dict)
-                resp = jsonify({'test_data': app_context.merge_list})
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify({'test_data': app_context.merge_list})
-        return resp
+        return Response(stream_with_context(self.generate({'test_data': app_context.merge_list})), content_type='application/json')
 
     def get_coverage(self):
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        data = app_context.coverage
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.coverage_arithmetic(base_dict)
-                resp = jsonify(app_context.coverage)
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify(app_context.coverage)
-        return resp
+        return Response(stream_with_context(self.generate(app_context.coverage)), content_type='application/json')
 
     def save_result(self):
         # 传入文件名
@@ -103,7 +58,7 @@ class AppUI(lyrebird.PluginView):
     def get_filter_conf(self):
         msg = FilterHandler().get_filer_conf()
         # 如果返回的string包含报错信息，则是报错
-        if "筛除配置文件有误" in msg:
+        if isinstance(msg, str):
             return context.make_fail_response(msg)
         else:
             return jsonify(msg)
@@ -129,6 +84,14 @@ class AppUI(lyrebird.PluginView):
                         'version_code': app_context.version_code})
 
     def on_create(self):
+
+        # 获取base_data_config文件信息
+        base_dict = BaseDataHandler().get_base_source()
+        # 如果import的文件异常
+        if not isinstance(base_dict, Response):
+            mergeAlgorithm.first_result_handler(base_dict)
+            mergeAlgorithm.coverage_arithmetic(base_dict)
+        
         # 设置模板目录（可选，设置模板文件目录。默认值templates）
         self.set_template_root('lyrebird_api_coverage')
         # 设置静态文件目录（可选，设置静态文件目录。默认值static）
@@ -143,9 +106,6 @@ class AppUI(lyrebird.PluginView):
         self.add_url_rule('/getTest', view_func=self.get_test_data)
         # 获取内存里保存的测试覆盖率信息
         self.add_url_rule('/getCoverage', view_func=self.get_coverage)
-
-        self.add_url_rule('/getCoverageData', view_func=self.get_coverage_data)
-
         # 保存测试数据在本地
         self.add_url_rule('/saveResult', view_func=self.save_result, methods=['POST'])
         # 续传测试结果
