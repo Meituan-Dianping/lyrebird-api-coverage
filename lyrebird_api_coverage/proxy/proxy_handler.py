@@ -44,10 +44,7 @@ class MyDataHandler:
             # 进行上报
             report_worker(path, device_ip)
             # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
-            duration = req_starttime - app_context.endtime
-            if duration > app_context.timer:
-                app_context.endtime = time.time()
-                lyrebird.emit('test_data message', path, namespace='/api_coverage')
+            self.emit(req_starttime, path)
 
         # 如果path配置了对应的参数
         elif path in app_context.path_param_dic:
@@ -78,10 +75,7 @@ class MyDataHandler:
                 report_worker(url_pgroup, device_ip)
             
             # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
-            duration = req_starttime - app_context.endtime
-            if duration > app_context.timer:
-                app_context.endtime = time.time()
-                lyrebird.emit('test_data message', path, namespace='/api_coverage')
+            self.emit(req_starttime, path)
         
 
         # 如果不在base里，不需要merge到数据中
@@ -89,3 +83,10 @@ class MyDataHandler:
             # mergeAlgorithm.merge_handler_new(path, path_id)
             # 进行上报
             report_worker(path, device_ip)
+
+
+    def emit(self, starttime, path):
+        duration = starttime - app_context.endtime
+        if duration > app_context.timer:
+            app_context.endtime = starttime
+            lyrebird.emit('test_data message', path, namespace='/api_coverage')

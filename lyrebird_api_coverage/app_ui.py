@@ -25,35 +25,15 @@ class AppUI(lyrebird.PluginView):
         """
         return self.render_template('index.html')
 
-    def get_coverage_data(self):
-        # 获取app_context里面缓存的测试数据
-        # 如果内存为空，则视为首次进入该页面
-        data = app_context.merge_list
-        if not data:
-            # 获取base_data_config文件信息
-            base_dict = BaseDataHandler().get_base_source()
-            # 如果import的文件异常
-            if isinstance(base_dict, Response):
-                resp = base_dict
-            else:
-                mergeAlgorithm.first_result_handler(base_dict)
-                mergeAlgorithm.coverage_arithmetic(base_dict)
-                resp = jsonify({'test_data': app_context.merge_list, 'coverage': app_context.coverage})
-        # 若不为空，则视为有测试缓存
-        else:
-            resp = jsonify({'test_data': app_context.merge_list, 'coverage': app_context.coverage})
-        return resp
+    def generate(self, data):
+        rtext = json.dumps(data)
+        yield rtext
 
-    # 获取init base数据 以及 测试缓存数据 API
     def get_test_data(self):
-        def generate():
-            result = {'test_data': app_context.merge_list}
-            rtext = json.dumps(result)
-            yield rtext
-        return Response(stream_with_context(generate()))
+        return Response(stream_with_context(self.generate({'test_data': app_context.merge_list})))
 
     def get_coverage(self):
-        return jsonify(app_context.coverage)
+        return Response(stream_with_context(self.generate(app_context.coverage)))
 
     def save_result(self):
         # 传入文件名
@@ -128,9 +108,6 @@ class AppUI(lyrebird.PluginView):
         self.add_url_rule('/getTest', view_func=self.get_test_data)
         # 获取内存里保存的测试覆盖率信息
         self.add_url_rule('/getCoverage', view_func=self.get_coverage)
-
-        self.add_url_rule('/getCoverageData', view_func=self.get_coverage_data)
-
         # 保存测试数据在本地
         self.add_url_rule('/saveResult', view_func=self.save_result, methods=['POST'])
         # 续传测试结果
