@@ -36,7 +36,7 @@ class Context:
         # 记录上次coverage变化的时间，避免频繁emit io消息
         self.covtime = 0
         # 时间间隔，每隔指定时间触发1次socket io消息，防止刷新频繁
-        self.timer = 1
+        self.SOCKET_PUSH_INTERVAL = 1
 
 
 # 单例模式

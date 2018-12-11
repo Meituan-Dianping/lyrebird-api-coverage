@@ -106,10 +106,9 @@ class MergeAlgorithm:
         if not history_coverage == coverage:
             handler_time = time.time()
             # 限制频繁emit io msg，在两次之间大于指定时间间隔才会emit
-            if handler_time - app_context.covtime > app_context.timer:
+            if handler_time - app_context.covtime > app_context.SOCKET_PUSH_INTERVAL:
                 lyrebird.emit('coverage message', app_context.coverage.get('total'), namespace='/api_coverage')
                 app_context.covtime = handler_time
-            lyrebird.emit('update', app_context.coverage, namespace='/charts')
             by_priority = [p.get('value') for p in app_context.coverage['priorities']]
             lyrebird.publish('coverage', 
                 dict(

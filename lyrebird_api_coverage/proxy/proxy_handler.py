@@ -87,6 +87,6 @@ class MyDataHandler:
 
     def emit(self, starttime, path):
         duration = starttime - app_context.endtime
-        if duration > app_context.timer:
+        if duration > app_context.SOCKET_PUSH_INTERVAL:
             app_context.endtime = starttime
             lyrebird.emit('test_data message', path, namespace='/api_coverage')
