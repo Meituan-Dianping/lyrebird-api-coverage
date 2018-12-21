@@ -47,7 +47,12 @@ class AppUI(lyrebird.PluginView):
 
     def clear_result(self):
         ResultHandler().clear_cache_result()
-        self.get_coverage()
+        # 获取基准文件
+        base_dict = BaseDataHandler().get_base_source()
+        # 初始化正常会进行数据的处理：覆盖率初始化 & API LIST初始化
+        if not isinstance(base_dict, Response):
+            mergeAlgorithm.first_result_handler(base_dict)
+            mergeAlgorithm.coverage_arithmetic(base_dict)
         lyrebird.publish('api_coverage', 'operation', name='clear_result')
         return context.make_ok_response()
 
