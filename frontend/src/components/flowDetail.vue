@@ -112,12 +112,5 @@ export default {
 }
 .flow-detail {
   height: 50vh;
-  /* total:100vh
-    header 38px
-    button-bar 38px
-    mode-tab 34px
-    message-tab 34px
-    footer 28px
-    */
 }
 </style>

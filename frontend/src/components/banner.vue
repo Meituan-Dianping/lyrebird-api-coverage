@@ -242,7 +242,7 @@ export default {
           data.append('result_name', this.newResultName)
           const name = this.newResultName
           if (name) {
-            api.saveResult(data).then(() => {
+            api.saveResult(data).then((response) => {
               if (response.data.code === 1000) {
                 this.$Notice.open({ title: 'Create result success!' })
                 this.newResultName = null
@@ -288,13 +288,13 @@ export default {
       const data = new FormData(
         document.getElementById('filtering-rules-form'),
       )
-      api.setFilterConf(data).then((data) => {
-        if (data.data.code === 1000) {
+      api.setFilterConf(data).then((response) => {
+        if (response.data.code === 1000) {
           this.$Notice.open({ title: 'Set filter success!' })
-        } else if (data.data.code === 3000) {
+        } else if (response.data.code === 3000) {
           this.$Notice.open({
             title: 'Set filter error!',
-            desc: data.data.message,
+            desc: response.data.message,
           })
         } else {
           this.$Notice.open({ title: 'Set filter error!' })

@@ -69,7 +69,6 @@ def on_request(msg):
             mergeAlgorithm.merge_handler_new(url_pgroup, path_id)
             mergeAlgorithm.coverage_handler()
             report_worker(url_pgroup, device_ip)
-        
         # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
         emit(req_starttime, path)
     # 如果不在base里，不需要merge到数据中

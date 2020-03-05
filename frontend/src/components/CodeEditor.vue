@@ -6,7 +6,7 @@
 
 <script>
 import * as monaco from 'monaco-editor'
-import { getJsonPath } from '../utils/jsonpath'
+import getJsonPath from '../utils/jsonpath'
 
 export default {
   name: 'codeEditor',

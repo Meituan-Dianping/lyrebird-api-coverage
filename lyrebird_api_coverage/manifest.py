@@ -21,41 +21,26 @@ manifest(
     id='api_coverage',
     name='APICoverage',
     api=[
-        # # http://localhost:9090/plugins/api_coverage/api/count
-        # ('/api/count', handler.request_count, ['GET']),
-        # # http://localhost:9090/plugins/api_coverage/api/reset
-        # ('/api/reset', api.reset_count, ['PUT'])
-        
         # 获取内存里保存的测试结果API
         ('/api/getTest', api.get_test_data),
-
         # 获取内存里保存的测试覆盖率信息
         ('/api/getCoverage', api.get_coverage),
-
         # 保存测试数据在本地
         ('/api/saveResult', api.save_result,['POST']),
-
         # 续传测试结果
         ('/api/resumeTest', api.resume_test, ['POST']),
-        
         # 清空测试缓存结果
         ('/api/clearResult', api.clear_result),
-
         # 导入base json文件
         ('/api/importBase', api.import_base, ['POST']),
-
         # 获取filter的conf文件
         ('/api/getFilterConf', api.get_filter_conf),
-
         # 覆盖配置filter conf文件
         ('/api/setFilterConf', api.set_filter_conf, ['POST']),
-
         # overbridge dump 信息用的API
         ('/api/dump', api.dump),
-
         # baseInfo
         ('/api/baseInfo', api.get_base_info),
-
     ],
     background=[
     ],
