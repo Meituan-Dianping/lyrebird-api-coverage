@@ -6,7 +6,7 @@
 
 <script>
 import * as monaco from 'monaco-editor'
-import { getJsonPath } from './jsonpath'
+import { getJsonPath } from '../utils/jsonpath'
 
 export default {
   name: 'codeEditor',
@@ -31,7 +31,6 @@ export default {
   },
   watch: {
     content(newValue) {
-      console.debug('Code editor: content change')
       if (this.editor) {
         if (newValue !== this.editor.getValue()) {
           monaco.editor.setModelLanguage(this.editor.getModel(), this.language)
@@ -77,7 +76,7 @@ export default {
       if (this.value !== value && language === 'json') {
         this.$emit('on-cursor-change', { offSet })
       }
-      if (language == 'json' && offSet !== 0) {
+      if (language === 'json' && offSet !== 0) {
         this.jsonPath = getJsonPath(value, offSet)
         this.$emit('on-jsonpath-change', { jsonPath: this.jsonPath })
       }

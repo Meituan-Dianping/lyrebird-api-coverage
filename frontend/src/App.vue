@@ -1,6 +1,6 @@
 <template>
     <div id='app'>
-        <banner @newbase="loadDetailData" @poptarget="findTargetContext" ></banner>
+        <banner @newbase="loadBasicDatas" @poptarget="findTargetContext" ></banner>
         <Divider style="margin:0" />
         <Row>
           <i-col span="6">
@@ -24,42 +24,37 @@ import apiList from './components/apiList.vue'
 export default {
   name: 'app',
   created() {
-    this.loadDetailData()
-    const { loadDetailData } = this
-    this.$io.on('apiCoverageBaseData', this.loadDetailData)
-    this.$io.on('apiCoverageCoverData', this.loadCoverageData)
+    // Get basic data when refresh page
+    this.loadBasicDatas()
+    // Get basic data when new proxy or mock by socketio
+    this.$io.on('apiCoverageBaseData', this.loadBasicDatas)
   },
 
 
   methods: {
-    loadDetailData() {
+    // Load basic datas : coveragedData、 baseInfo、 coverageDetail、
+    loadBasicDatas() {
       this.$store.dispatch('loadDetailData')
       this.$store.dispatch('loadBaseInfo')
       this.$store.dispatch('loadCoverageData')
     },
-    loadCoverageData() {
-      this.$store.dispatch('loadCoverageData')
-    },
-    // 搜索框
-    findTargetContext(targetContext) {
-      this.$store.dispatch('setTargetContext', targetContext)
-      console.log(this.$store.state.targetContext)
 
-      var ShowedAPIData = []
-      console.log(ShowedAPIData)
+    // search input
+    findTargetContext(targetContext) {
+      // Create a list to save the display result data after the search
+      let ShowedAPIData = []
+      // get user imported base  (full data)
       const { detailData } = this.$store.state
-      console.log(detailData)
-      var { targetContext } = this.$store.state
       if (targetContext) {
-        var ShowedAPIData = []
         for (const item of detailData) {
-          if (JSON.stringify(item, null).search(targetContext) != -1) {
+          if (JSON.stringify(item, null).search(targetContext) !== -1) {
             ShowedAPIData.push(item)
           }
         }
       } else {
         ShowedAPIData = detailData
       }
+      // Assemble the ShowedAPIData for page display
       this.$store.dispatch('setShowedAPIData', ShowedAPIData)
     },
 
@@ -77,5 +72,4 @@ export default {
 #app {
   min-width: 1500px;
 }
-
 </style>

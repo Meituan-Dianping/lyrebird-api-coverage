@@ -11,7 +11,6 @@ export default new Vuex.Store({
     detailData: [],
     coverageData: {},
     showedAPIData: [],
-    targetContext: null,
   },
   mutations: {
     setDetailData(state, detailData) {
@@ -23,9 +22,6 @@ export default new Vuex.Store({
     setShowedAPIData(state, showedAPIData) {
       state.showedAPIData = showedAPIData
     },
-    setTargetContext(state, targetContext) {
-      state.targetContext = targetContext
-    },
   },
   actions: {
     loadDetailData(context) {
@@ -35,8 +31,8 @@ export default new Vuex.Store({
           context.commit('setDetailData', response.data.test_data)
           context.commit('setShowedAPIData', response.data.test_data)
         })
-        .catch((error) => {
-          console.log('loadDetailData failed', error)
+        .catch(() => {
+          this.$Notice.open({ title: "loadDetailData error!" });
         })
     },
     loadCoverageData(context) {
@@ -45,12 +41,9 @@ export default new Vuex.Store({
         .then((response) => {
           context.commit('setCoverageData', response.data)
         })
-        .catch((error) => {
-          console.log('loadCoverageData failed', error)
+        .catch(() => {
+          this.$Notice.open({ title: "loadCoverageData error!" });
         })
-    },
-    setTargetContext(context, targetContext) {
-      context.commit('setTargetContext', targetContext)
     },
     setShowedAPIData(context, showedAPIData) {
       context.commit('setShowedAPIData', showedAPIData)

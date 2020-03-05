@@ -13,7 +13,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='lyrebird-api-coverage',
-    version='0.2.8',
+    version=VERSION,
     packages=find_packages(),
     url='https://github.com/meituan/lyrebird-api-coverage',
     author='HBQA',

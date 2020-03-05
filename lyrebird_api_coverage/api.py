@@ -3,21 +3,17 @@ import lyrebird
 import os
 from flask import request, jsonify, Response, stream_with_context
 from lyrebird_api_coverage.client.context import app_context
-from lyrebird_api_coverage.client import context
-from lyrebird_api_coverage.client.event_subscibe import event_subscribe
 from lyrebird_api_coverage.handlers.base_source_handler import BaseDataHandler
 from lyrebird_api_coverage.client.merge_algorithm import mergeAlgorithm
 from lyrebird_api_coverage.handlers.filter_handler import FilterHandler
 from lyrebird_api_coverage.handlers.import_file_handler import ImportHandler
 from lyrebird_api_coverage.handlers.result_handler import ResultHandler, PLUGINS_DUMP_DIR
 from lyrebird import context
-import time
-
 
 
 def generate(data):
-        rtext = json.dumps(data)
-        yield rtext
+    rtext = json.dumps(data)
+    yield rtext
 
 
 # 获取内存里保存的测试结果API

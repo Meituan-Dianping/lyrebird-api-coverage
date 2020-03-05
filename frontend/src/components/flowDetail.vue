@@ -11,7 +11,12 @@
         </Tabs>
       </i-col>
     </Row>
-    <code-editor v-if="flowDetail" :language="codeType" :content="codeContent" class="flow-detail"></code-editor>
+    <code-editor 
+      v-if="flowDetail" 
+      :language="codeType" 
+      :content="codeContent" 
+      class="flow-detail">
+    </code-editor>
   </div>
 </template>
 
@@ -85,15 +90,15 @@ export default {
       this.codeType = 'json'
       return JSON.stringify(data, null, 4)
     },
-    parseHtmlData(data) {
+    parseHtmlData() {
       this.codeType = 'html'
       return this.flowDetail.response.data
     },
-    parseXmlData(data) {
+    parseXmlData() {
       this.codeType = 'xml'
       return this.flowDetail.response.data
     },
-    parseTextData(data) {
+    parseTextData() {
       this.codeType = 'text'
       return this.flowDetail.response.data
     },

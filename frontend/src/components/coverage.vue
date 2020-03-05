@@ -1,52 +1,42 @@
 <template>
   <div id="coverage" class="box box-solid">
-    <div class="box-body" style="height:auto; overflow:auto">
-      <table  class="table table-hover">
+    <Card>
+      <table>
         <thead>
-          <!-- <tr v-for="item in data.headers"> -->
           <tr>
-            <td v-for="item in headerShowedInList" :key="item"  >
-              <b>{{item}}</b>
+            <td v-for="item in headerShowedInList" :key="item">
+              <b>{{ item }}</b>
             </td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td width="80"  style="vertical-align:middle;">Total</td>
-            <td width="80" style="vertical-align:middle;">{{coveragedata.test_len + "/" + coveragedata.len}}</td>
-            <!-- <td >
-              <span :class="[setCoverageClass(coveragedata.total)]">{{coveragedata.total+ "%"}}</span>
-            </td> -->
+            <td width="80" style="vertical-align:middle;">Total</td>
+            <td width="80" style="vertical-align:middle;">
+              {{ coverageData.test_len + "/" + coverageData.len }}
+            </td>
             <td width="160">
-              <!-- <div class="progress progress-xs progress-striped active">
-                <div
-                  :class="[setProgressClass(coveragedata.total)]"
-                  :style="{width:setProgressStyle(coveragedata.total)}"
-                ></div>
-              </div> -->
-                <Progress :percent="coveragedata.total" status="active" :stroke-color="['#108ee9', '#87d068']" />
+              <Progress
+                :percent="coverageData.total"
+                status="active"
+                :stroke-color="['#108ee9', '#87d068']"
+              />
             </td>
           </tr>
-          <tr v-for="item in coveragedata.priorities" :key="item.label">
-            <td style="vertical-align:middle;">{{"P" + item.label}}</td>
-            <td style="vertical-align:middle;">{{item.test_len + "/" + item.len}}</td>
-            <!-- <td>
-              <span :class="[setCoverageClass(item.value)]">{{item.value+ "%"}}</span>
-            </td> -->
-            <td>
-              <!-- <div class="progress progress-xs progress-striped active">
-                <div
-                  :class="[setProgressClass(item.value)]"
-                  :style="{width:setProgressStyle(item.value)}"
-                ></div>
-              </div> -->
-             <Progress :percent="item.value" status="active" :stroke-color="['#108ee9', '#87d068']" />
-
+          <tr v-for="item in coverageData.priorities" :key="item.label">
+            <td style="vertical-align:middle;">{{ "P" + item.label }}</td>
+            <td style="vertical-align:middle;">
+              {{ item.test_len + "/" + item.len }}
             </td>
+            <Progress
+              :percent="item.value"
+              status="active"
+              :stroke-color="['#108ee9', '#87d068']"
+            />
           </tr>
         </tbody>
       </table>
-    </div>
+    </Card>
   </div>
 </template>
 
@@ -58,7 +48,7 @@ export default {
     }
   },
   computed: {
-    coveragedata() {
+    coverageData() {
       return this.$store.state.coverageData
     },
   },
@@ -90,11 +80,10 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style scoped>
 #coverage {
-  /* background-color: red; */
-  width: 300px !important;
-  height: 150px !important;
+  width: 300px;
+  height: 150px;
   margin: 30px 30px 0 30px;
 }
 </style>

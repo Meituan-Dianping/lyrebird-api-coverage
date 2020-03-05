@@ -28,11 +28,11 @@ export default {
             context.commit('setVersionCode', response.data.version_code)
             context.commit('setVersionName', response.data.version_name)
           } else {
-            console.error('loadBandwidth failed', error)
+            this.$Notice.open({ title: "loadBaseInfo  failed!" });
           }
         })
-        .catch((error) => {
-          console.error('loadBandwidth failed', error)
+        .catch(() => {
+            this.$Notice.open({ title: "loadBaseInfo  failed!" });
         })
     },
   },
