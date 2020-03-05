@@ -28,11 +28,11 @@ export default {
             context.commit('setVersionCode', response.data.version_code)
             context.commit('setVersionName', response.data.version_name)
           } else {
-            this.$Notice.open({ title: "loadBaseInfo  failed!" });
+            this.$Notice.open({ title: 'loadBaseInfo  failed!' })
           }
         })
         .catch(() => {
-            this.$Notice.open({ title: "loadBaseInfo  failed!" });
+          this.$Notice.open({ title: 'loadBaseInfo  failed!' })
         })
     },
   },

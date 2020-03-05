@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import ViewUI from 'view-design'
-import io from "socket.io-client"
+import io from 'socket.io-client'
 import App from './App.vue'
 import store from './store'
 import 'view-design/dist/styles/iview.css'

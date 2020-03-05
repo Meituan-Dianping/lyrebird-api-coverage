@@ -69,8 +69,6 @@ export default {
               return h('p', { style: { color: 'green' } }, 'Tested')
             } if (params.row.status === 2) {
               return h('p', 'NewAPI')
-            }else {
-              return
             }
           },
           sortable: true,
@@ -96,9 +94,8 @@ export default {
               return row.status === 2
             } if (value === 0) {
               return row.status === 0
-            }else{
-              return row.status === null
             }
+            return row.status === null
           },
         },
         {

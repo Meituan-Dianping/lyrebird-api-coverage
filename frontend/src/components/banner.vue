@@ -92,223 +92,222 @@
 </template>
 
 <script>
-import * as api from "../apis";
+import * as api from '../apis'
 
 export default {
   data() {
     return {
-      buttonSize: "default",
-      newResultName: "",
+      buttonSize: 'default',
+      newResultName: '',
       showFilterModal: false,
-      filterRules: "",
-      targetContext: null
-    };
+      filterRules: '',
+      targetContext: null,
+    }
   },
   methods: {
     // import base
     openImportBaseIpt() {
-      this.$refs.baseElem.dispatchEvent(new MouseEvent("click"));
+      this.$refs.baseElem.dispatchEvent(new MouseEvent('click'))
     },
     importBase(e) {
-      const file = document.getElementById("importBaseIpt");
-      const filename = file.value;
-      if (!filename || !filename.endsWith(".json")) {
-        this.$Notice.open({ title: "只能上传.json后缀的文件 ：）" });
+      const file = document.getElementById('importBaseIpt')
+      const filename = file.value
+      if (!filename || !filename.endsWith('.json')) {
+        this.$Notice.open({ title: '只能上传.json后缀的文件 ：）' })
       } else {
-        const upLoadFile = new FormData();
+        const upLoadFile = new FormData()
 
-        upLoadFile.append("json-import", e.target.files[0]);
+        upLoadFile.append('json-import', e.target.files[0])
         api
           .uploadBase(upLoadFile)
-          .then(response => {
+          .then((response) => {
             if (response.data.code === 1000) {
-              this.$Notice.open({ title: "Import base success!" });
-              this.$emit("newbase");
+              this.$Notice.open({ title: 'Import base success!' })
+              this.$emit('newbase')
             } else {
               this.$Notice.open({
-                title: "import file failed!",
-                desc: String(response.data.message)
-              });
+                title: 'import file failed!',
+                desc: String(response.data.message),
+              })
             }
           })
           .catch(() => {
-            this.$Notice.open({ title: "Import base failed!" });
-          });
+            this.$Notice.open({ title: 'Import base failed!' })
+          })
       }
     },
 
     // resume Test
     openResumeTestIpt() {
-      this.$refs.resumeElem.dispatchEvent(new MouseEvent("click"));
+      this.$refs.resumeElem.dispatchEvent(new MouseEvent('click'))
     },
     resumeTest(e) {
-      const file = document.getElementById("resumeTestIpt");
-      const filename = file.value;
-      if (!filename || !filename.endsWith(".json")) {
-        this.$Notice.open({ title: "只能上传.json后缀的文件 ：）" });
+      const file = document.getElementById('resumeTestIpt')
+      const filename = file.value
+      if (!filename || !filename.endsWith('.json')) {
+        this.$Notice.open({ title: '只能上传.json后缀的文件 ：）' })
       } else {
-        const upLoadFile = new FormData();
-        upLoadFile.append("json-import", e.target.files[0]);
-        api.resumeTest(upLoadFile).then(response => {
+        const upLoadFile = new FormData()
+        upLoadFile.append('json-import', e.target.files[0])
+        api.resumeTest(upLoadFile).then((response) => {
           if (response.data.code === 1000) {
-            this.$Notice.open({ title: "resume Test success!" });
-            this.$emit("newbase");
+            this.$Notice.open({ title: 'resume Test success!' })
+            this.$emit('newbase')
           } else {
             this.$Notice.open({
-              title: response.data.message
-            });
+              title: response.data.message,
+            })
           }
-        });
+        })
       }
     },
 
     // save result
     showSaveResultModal() {
       this.$Modal.confirm({
-        render: h =>
-          h("div", [
-            h(
-              "div",
-              {
-                style:
-                  "margin-bottom:20px;vertical-align: middle;font-size: 16px;color: #17233d;font-weight: 700;"
-              },
-              "Save Result"
-            ),
-            h(
-              "div",
-              {
-                style:
-                  "margin-bottom:20px;vertical-align: middle;color: #17233d;font-weight: 200;"
-              },
-              [
-                h(
-                  "span",
-                  "Path: ~/.lyrebird/plugins/lyrebird_api_coverage/data"
-                ),
-                h("Icon", {
-                  props: {
-                    type: "md-copy"
-                  },
-                  style: {
-                    fontSize: "18px",
-                    color: "gary",
-                    marginLeft: "5px"
-                  },
-                  on: {
-                    click: e => {
-                      // 获取需要复制的文字
-                      const copyStr = e.target.offsetParent.innerText.split(
-                        ":"
-                      )[1];
-                      // 创建input标签存放需要复制的文字
-                      const oInput = document.createElement("input");
-                      // 把文字放进input中，供复制
-                      oInput.value = copyStr;
-                      document.body.appendChild(oInput);
-                      // 选中创建的input
-                      oInput.select();
-                      // 执行复制方法， 该方法返回bool类型的结果，告诉我们是否复制成功
-                      const copyResult = document.execCommand("copy");
-                      // 操作中完成后 从Dom中删除创建的input
-                      document.body.removeChild(oInput);
-                      // 根据返回的复制结果 给用户不同的提示
-                      if (copyResult) {
-                        this.$Message.info(
-                          "The saved path has been copied to the clipboard"
-                        );
-                      } else {
-                        this.$Message.error("copy failed");
-                      }
+        render: (h) => h('div', [
+          h(
+            'div',
+            {
+              style:
+                  'margin-bottom:20px;vertical-align: middle;font-size: 16px;color: #17233d;font-weight: 700;',
+            },
+            'Save Result',
+          ),
+          h(
+            'div',
+            {
+              style:
+                  'margin-bottom:20px;vertical-align: middle;color: #17233d;font-weight: 200;',
+            },
+            [
+              h(
+                'span',
+                'Path: ~/.lyrebird/plugins/lyrebird_api_coverage/data',
+              ),
+              h('Icon', {
+                props: {
+                  type: 'md-copy',
+                },
+                style: {
+                  fontSize: '18px',
+                  color: 'gary',
+                  marginLeft: '5px',
+                },
+                on: {
+                  click: (e) => {
+                    // 获取需要复制的文字
+                    const copyStr = e.target.offsetParent.innerText.split(
+                      ':',
+                    )[1]
+                    // 创建input标签存放需要复制的文字
+                    const oInput = document.createElement('input')
+                    // 把文字放进input中，供复制
+                    oInput.value = copyStr
+                    document.body.appendChild(oInput)
+                    // 选中创建的input
+                    oInput.select()
+                    // 执行复制方法， 该方法返回bool类型的结果，告诉我们是否复制成功
+                    const copyResult = document.execCommand('copy')
+                    // 操作中完成后 从Dom中删除创建的input
+                    document.body.removeChild(oInput)
+                    // 根据返回的复制结果 给用户不同的提示
+                    if (copyResult) {
+                      this.$Message.info(
+                        'The saved path has been copied to the clipboard',
+                      )
+                    } else {
+                      this.$Message.error('copy failed')
                     }
-                  }
-                })
-              ]
-            ),
-            h("Input", {
-              props: {
-                value: this.value,
-                autofocus: true,
-                placeholder: "Type file name,eg:travel_9.5_test_result"
+                  },
+                },
+              }),
+            ],
+          ),
+          h('Input', {
+            props: {
+              value: this.value,
+              autofocus: true,
+              placeholder: 'Type file name,eg:travel_9.5_test_result',
+            },
+            on: {
+              input: (val) => {
+                this.newResultName = val
               },
-              on: {
-                input: val => {
-                  this.newResultName = val;
-                }
-              }
-            })
-          ]),
+            },
+          }),
+        ]),
         onOk: () => {
-          const data = new FormData();
-          data.append("result_name", this.newResultName);
-          const name = this.newResultName;
+          const data = new FormData()
+          data.append('result_name', this.newResultName)
+          const name = this.newResultName
           if (name) {
             api.saveResult(data).then(() => {
               if (response.data.code === 1000) {
-                this.$Notice.open({ title: "Create result success!" });
-                this.newResultName = null;
+                this.$Notice.open({ title: 'Create result success!' })
+                this.newResultName = null
               } else {
-                this.$Notice.open({ title: "Create result failed!" });
-                this.newResultName = null;
+                this.$Notice.open({ title: 'Create result failed!' })
+                this.newResultName = null
               }
-            });
+            })
           } else {
-            this.$Notice.open({ title: "Result name is null!" });
+            this.$Notice.open({ title: 'Result name is null!' })
           }
-        }
-      });
+        },
+      })
     },
 
     // clear test
     clearTest() {
-      api.clearTest().then(response => {
+      api.clearTest().then((response) => {
         if (response.data.code === 1000) {
-          this.$Notice.open({ title: "Clear test success!" });
-          this.$emit("newbase");
-          this.$emit("newcoverage");
+          this.$Notice.open({ title: 'Clear test success!' })
+          this.$emit('newbase')
+          this.$emit('newcoverage')
         } else {
-          this.$Notice.open({ title: "Clear test failed!" });
+          this.$Notice.open({ title: 'Clear test failed!' })
         }
-      });
+      })
     },
 
     // filter
     filterShow() {
-      this.showFilterModal = true;
-      api.getFilterConf().then(data => {
+      this.showFilterModal = true
+      api.getFilterConf().then((data) => {
         if (data.data.code === 3000) {
-          this.$Notice.open({ title: data.data.message });
+          this.$Notice.open({ title: data.data.message })
         } else {
           document.getElementById(
-            "filtering-rules-modal-data"
-          ).value = JSON.stringify(data.data, null, 4);
+            'filtering-rules-modal-data',
+          ).value = JSON.stringify(data.data, null, 4)
         }
-      });
+      })
     },
     editFilterOk() {
       const data = new FormData(
-        document.getElementById("filtering-rules-form")
-      );
-      api.setFilterConf(data).then(data => {
+        document.getElementById('filtering-rules-form'),
+      )
+      api.setFilterConf(data).then((data) => {
         if (data.data.code === 1000) {
-          this.$Notice.open({ title: "Set filter success!" });
+          this.$Notice.open({ title: 'Set filter success!' })
         } else if (data.data.code === 3000) {
           this.$Notice.open({
-            title: "Set filter error!",
-            desc: data.data.message
-          });
+            title: 'Set filter error!',
+            desc: data.data.message,
+          })
         } else {
-          this.$Notice.open({ title: "Set filter error!" });
+          this.$Notice.open({ title: 'Set filter error!' })
         }
-      });
+      })
     },
 
     // search
     popTargetContext(targetContext) {
-      this.$emit("poptarget", targetContext);
+      this.$emit('poptarget', targetContext)
     },
-  }
-};
+  },
+}
 </script>
 
 <style scoped>

@@ -11,10 +11,10 @@
         </Tabs>
       </i-col>
     </Row>
-    <code-editor 
-      v-if="flowDetail" 
-      :language="codeType" 
-      :content="codeContent" 
+    <code-editor
+      v-if="flowDetail"
+      :language="codeType"
+      :content="codeContent"
       class="flow-detail">
     </code-editor>
   </div>

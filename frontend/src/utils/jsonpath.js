@@ -51,55 +51,55 @@ function findEndQuote(text, i) {
         break
       }
     }
-    i +=1
+    i += 1
   }
   return i
 }
 
 export function getJsonPath(text, offSet) {
-  let pos = 0;
-  const stack = [];
-  let isInKey = false;
+  let pos = 0
+  const stack = []
+  let isInKey = false
 
   while (pos < offSet) {
-    const startPos = pos;
+    const startPos = pos
     switch (text[pos]) {
       case '"':
-        const { text: s, pos: newPos } = readString(text, pos);
+        const { text: s, pos: newPos } = readString(text, pos)
         if (stack.length) {
-          const frame = stack[stack.length - 1];
+          const frame = stack[stack.length - 1]
           if (frame.colType === colType.Object && isInKey) {
-            frame.key = s;
-            isInKey = false;
+            frame.key = s
+            isInKey = false
           }
         }
-        pos = newPos;
-        break;
-      case "{":
-        stack.push({ colType: colType.Object });
-        isInKey = true;
-        break;
-      case "[":
-        stack.push({ colType: colType.Array, index: 0 });
-        break;
-      case "}":
-      case "]":
-        stack.pop();
-        break;
-      case ",":
+        pos = newPos
+        break
+      case '{':
+        stack.push({ colType: colType.Object })
+        isInKey = true
+        break
+      case '[':
+        stack.push({ colType: colType.Array, index: 0 })
+        break
+      case '}':
+      case ']':
+        stack.pop()
+        break
+      case ',':
         if (stack.length) {
-          const frame = stack[stack.length - 1];
+          const frame = stack[stack.length - 1]
           if (frame.colType === colType.Object) {
-            isInKey = true;
+            isInKey = true
           } else {
-            frame.index += 1;
+            frame.index += 1
           }
         }
-        break;
+        break
     }
     if (pos === startPos) {
-      pos += 1;
+      pos += 1
     }
   }
-  return pathToString(stack);
+  return pathToString(stack)
 }

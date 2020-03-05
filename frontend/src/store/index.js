@@ -32,7 +32,7 @@ export default new Vuex.Store({
           context.commit('setShowedAPIData', response.data.test_data)
         })
         .catch(() => {
-          this.$Notice.open({ title: "loadDetailData error!" });
+          this.$Notice.open({ title: 'loadDetailData error!' })
         })
     },
     loadCoverageData(context) {
@@ -42,7 +42,7 @@ export default new Vuex.Store({
           context.commit('setCoverageData', response.data)
         })
         .catch(() => {
-          this.$Notice.open({ title: "loadCoverageData error!" });
+          this.$Notice.open({ title: 'loadCoverageData error!' })
         })
     },
     setShowedAPIData(context, showedAPIData) {
