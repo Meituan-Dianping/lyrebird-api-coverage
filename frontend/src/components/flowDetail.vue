@@ -14,7 +14,7 @@
     <code-editor
       v-if="flowDetail"
       :language="codeType"
-      :content="codeContent"
+      :content="codeContents"
       class="flow-detail">
     </code-editor>
   </div>
@@ -38,7 +38,7 @@ export default {
     flowDetail() {
       return this.$store.state.apiList.focusedFlowDetail
     },
-    codeContent() {
+    codeContents() {
       let codeContent = ''
       if (this.currentTab === 'req') {
         codeContent = JSON.stringify(this.flowDetail.request, null, 4)

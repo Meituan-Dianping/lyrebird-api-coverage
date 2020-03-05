@@ -70,6 +70,7 @@ export default {
             } if (params.row.status === 2) {
               return h('p', 'NewAPI')
             }
+            return h('p', null)
           },
           sortable: true,
           filters: [
