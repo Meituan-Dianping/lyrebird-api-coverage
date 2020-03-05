@@ -52,43 +52,41 @@
 
 <script>
 export default {
-  data: function () {
+  data() {
     return {
-      headerShowedInList: ["Priority", "Number", "Coverage"]
+      headerShowedInList: ['Priority', 'Number', 'Coverage'],
     }
   },
   computed: {
-    coveragedata () {
-        return this.$store.state.coverageData
+    coveragedata() {
+      return this.$store.state.coverageData
     },
   },
   methods: {
-    setCoverageClass: function(value) {
+    setCoverageClass(value) {
       if (value >= 90) {
-        return "badge bg-green";
-      } else if (value >= 60 && value < 90) {
-        return "badge bg-light-blue";
-      } else if (value >= 30 && value < 60) {
-        return "badge bg-yellow";
-      } else {
-        return "badge bg-red";
+        return 'badge bg-green'
+      } if (value >= 60 && value < 90) {
+        return 'badge bg-light-blue'
+      } if (value >= 30 && value < 60) {
+        return 'badge bg-yellow'
       }
+      return 'badge bg-red'
     },
-    setProgressClass: function(data) {
+    setProgressClass(data) {
       if (data >= 90) {
-        return "progress-bar progress-bar-success";
-      } else if (data >= 60 && data < 90) {
-        return "progress-bar progress-bar-primary";
-      } else if (data >= 30 && data < 60) {
-        return "progress-bar progress-bar-warning";
-      } else {
-        return "progress-bar progress-bar-danger";
+        return 'progress-bar progress-bar-success'
+      } if (data >= 60 && data < 90) {
+        return 'progress-bar progress-bar-primary'
+      } if (data >= 30 && data < 60) {
+        return 'progress-bar progress-bar-warning'
       }
+      return 'progress-bar progress-bar-danger'
     },
-    setProgressStyle: function(data) {
-      return data + "%";
-    }
-  }
+    setProgressStyle(data) {
+      return `${data}%`
+    },
+  },
 }
 </script>
 

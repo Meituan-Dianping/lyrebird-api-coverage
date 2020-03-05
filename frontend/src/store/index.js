@@ -1,63 +1,63 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import * as apis from "@/apis";
-import info from "@/store/info";
-import apiList from "@/store/apiList";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * as apis from '@/apis'
+import info from '@/store/info'
+import apiList from '@/store/apiList'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     detailData: [],
     coverageData: {},
     showedAPIData: [],
-    targetContext: null
+    targetContext: null,
   },
   mutations: {
     setDetailData(state, detailData) {
-      state.detailData = detailData;
+      state.detailData = detailData
     },
     setCoverageData(state, coverageData) {
-      state.coverageData = coverageData;
+      state.coverageData = coverageData
     },
     setShowedAPIData(state, showedAPIData) {
-      state.showedAPIData = showedAPIData;
+      state.showedAPIData = showedAPIData
     },
     setTargetContext(state, targetContext) {
-      state.targetContext = targetContext;
-    }
+      state.targetContext = targetContext
+    },
   },
   actions: {
     loadDetailData(context) {
       apis
         .getTest()
-        .then(response => {
-          context.commit("setDetailData", response.data.test_data);
-          context.commit("setShowedAPIData", response.data.test_data);
+        .then((response) => {
+          context.commit('setDetailData', response.data.test_data)
+          context.commit('setShowedAPIData', response.data.test_data)
         })
-        .catch(error => {
-          console.log("loadDetailData failed", error);
-        });
+        .catch((error) => {
+          console.log('loadDetailData failed', error)
+        })
     },
     loadCoverageData(context) {
       apis
         .getCoverage()
-        .then(response => {
-          context.commit("setCoverageData", response.data);
+        .then((response) => {
+          context.commit('setCoverageData', response.data)
         })
-        .catch(error => {
-          console.log("loadCoverageData failed", error);
-        });
+        .catch((error) => {
+          console.log('loadCoverageData failed', error)
+        })
     },
     setTargetContext(context, targetContext) {
-      context.commit("setTargetContext", targetContext);
+      context.commit('setTargetContext', targetContext)
     },
     setShowedAPIData(context, showedAPIData) {
-      context.commit("setShowedAPIData", showedAPIData);
-    }
+      context.commit('setShowedAPIData', showedAPIData)
+    },
   },
   modules: {
     info,
-    apiList
-  }
-});
+    apiList,
+  },
+})

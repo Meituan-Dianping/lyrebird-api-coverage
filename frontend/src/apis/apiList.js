@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios'
 
-const PREFIX = "/plugins/api_coverage/api";
+const PREFIX = '/plugins/api_coverage/api'
 
 // getFlowDetail
-export const getFlowDetail = flowId => {
-  return axios({
-    url: "/api/flow/" + flowId
-  });
-};
+const getFlowDetail = (flowId) => axios({
+  url: `/api/flow/${flowId}`,
+})
+
+export default getFlowDetail

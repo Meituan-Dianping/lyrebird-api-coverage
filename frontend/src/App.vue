@@ -3,13 +3,13 @@
         <banner @newbase="loadDetailData" @poptarget="findTargetContext" ></banner>
         <Divider style="margin:0" />
         <Row>
-          <Col span="6">
+          <i-col span="6">
             <coverage />
             <info />
-          </Col>
-          <Col span="18" >
+          </i-col>
+          <i-col span="18" >
             <api-list ></api-list>
-          </Col>
+          </i-col>
         </Row>
     </div>
 </template>
@@ -23,57 +23,53 @@ import apiList from './components/apiList.vue'
 
 export default {
   name: 'app',
-  created () {
-    this.loadDetailData();
-    let loadDetailData = this.loadDetailData
+  created() {
+    this.loadDetailData()
+    const { loadDetailData } = this
     this.$io.on('apiCoverageBaseData', this.loadDetailData)
     this.$io.on('apiCoverageCoverData', this.loadCoverageData)
-
   },
-  
-  
+
+
   methods: {
-    loadDetailData: function() {
+    loadDetailData() {
       this.$store.dispatch('loadDetailData')
       this.$store.dispatch('loadBaseInfo')
       this.$store.dispatch('loadCoverageData')
-
     },
-    loadCoverageData: function() {
+    loadCoverageData() {
       this.$store.dispatch('loadCoverageData')
     },
-    //搜索框
-    findTargetContext: function(targetContext) {
-      this.$store.dispatch('setTargetContext',targetContext)
+    // 搜索框
+    findTargetContext(targetContext) {
+      this.$store.dispatch('setTargetContext', targetContext)
       console.log(this.$store.state.targetContext)
 
       var ShowedAPIData = []
-      console.log(ShowedAPIData);
-      var detailData = this.$store.state.detailData
+      console.log(ShowedAPIData)
+      const { detailData } = this.$store.state
       console.log(detailData)
-      var targetContext = this.$store.state.targetContext
+      var { targetContext } = this.$store.state
       if (targetContext) {
-        var ShowedAPIData = [];
+        var ShowedAPIData = []
         for (const item of detailData) {
           if (JSON.stringify(item, null).search(targetContext) != -1) {
-            ShowedAPIData.push(item);
+            ShowedAPIData.push(item)
           }
         }
       } else {
         ShowedAPIData = detailData
       }
-      this.$store.dispatch('setShowedAPIData',ShowedAPIData)
+      this.$store.dispatch('setShowedAPIData', ShowedAPIData)
+    },
 
-
-    }
-    
   },
   components: {
     banner,
     coverage,
     info,
     apiList,
-  }
+  },
 }
 </script>
 

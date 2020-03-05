@@ -3,59 +3,59 @@ import axios from 'axios'
 const PREFIX = '/plugins/api_coverage/api'
 
 // importBase
-export const uploadBase = upLoadFile => {
-    let url = PREFIX + '/importBase'
-    return axios({
-        url,
-        method: 'POST',
-        data: upLoadFile
-    })
+export const uploadBase = (upLoadFile) => {
+  const url = `${PREFIX}/importBase`
+  return axios({
+    url,
+    method: 'POST',
+    data: upLoadFile,
+  })
 }
 
-//resumeTest
-export const resumeTest = upLoadFile => {
-    let url = PREFIX + '/resumeTest'
-    return axios({
-        url,
-        method: 'POST',
-        data: upLoadFile
-    })
+// resumeTest
+export const resumeTest = (upLoadFile) => {
+  const url = `${PREFIX}/resumeTest`
+  return axios({
+    url,
+    method: 'POST',
+    data: upLoadFile,
+  })
 }
 
-//saveResult
-export const saveResult = resultName => {
-    let url = PREFIX + '/saveResult'
-    return axios({
-        url,
-        method: 'POST',
-        data: resultName
-    })
+// saveResult
+export const saveResult = (resultName) => {
+  const url = `${PREFIX}/saveResult`
+  return axios({
+    url,
+    method: 'POST',
+    data: resultName,
+  })
 }
 
 // clearTest
 export const clearTest = () => {
-    let url = PREFIX + '/clearResult'
-    return axios({
-        url,
-        method: 'GET',
-    })
+  const url = `${PREFIX}/clearResult`
+  return axios({
+    url,
+    method: 'GET',
+  })
 }
 
-//getFilterConf
+// getFilterConf
 export const getFilterConf = () => {
-    let url = PREFIX + '/getFilterConf'
-    return axios({
-        url,
-        method: 'GET',
-    })
+  const url = `${PREFIX}/getFilterConf`
+  return axios({
+    url,
+    method: 'GET',
+  })
 }
 
-//setFilterConf
-export const setFilterConf = filterFile => {
-    let url = PREFIX + '/setFilterConf'
-    return axios({
-        url,
-        method: 'POST',
-        data: filterFile
-    })
+// setFilterConf
+export const setFilterConf = (filterFile) => {
+  const url = `${PREFIX}/setFilterConf`
+  return axios({
+    url,
+    method: 'POST',
+    data: filterFile,
+  })
 }

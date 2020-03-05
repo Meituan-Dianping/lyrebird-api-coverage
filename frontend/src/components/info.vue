@@ -9,20 +9,20 @@
 
 <script>
 export default {
-    created() {
-		
+  created() {
+
+  },
+  computed: {
+    business() {
+      return this.$store.state.info.business
     },
-    computed: {
-        business () {
-            return this.$store.state.info.business
-        },
-        versionCode () {
-            return this.$store.state.info.versionCode
-        },
-        versionName () {
-            return this.$store.state.info.versionName
-        },
-    }
+    versionCode() {
+      return this.$store.state.info.versionCode
+    },
+    versionName() {
+      return this.$store.state.info.versionName
+    },
+  },
 
 }
 </script>
