@@ -31,7 +31,6 @@ class ResultHandler:
 
     def make_result_dir(self):
         save_time = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
-        print(save_time)
         test_data_dir = os.path.join(PLUGINS_DATA_DIR, str(save_time))
         if not os.path.exists(test_data_dir):
             os.makedirs(test_data_dir)

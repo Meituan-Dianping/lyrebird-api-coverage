@@ -1,7 +1,12 @@
-from setuptools import setup
+from setuptools import setup,find_packages
 import os
+import runpy
 
 here = os.path.abspath(os.path.dirname(__file__))
+
+VERSION = runpy.run_path(
+    os.path.join(here, 'lyrebird_api_coverage', 'version.py')
+)['VERSION']
 
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
@@ -9,7 +14,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='lyrebird-api-coverage',
     version='0.2.8',
-    packages=['lyrebird_api_coverage'],
+    packages=find_packages(),
     url='https://github.com/meituan/lyrebird-api-coverage',
     author='HBQA',
     long_description=long_description,
@@ -23,13 +28,8 @@ setup(
         "Operating System :: MacOS",
     ),
     entry_points={
-        'console_scripts': [
-        ],
-        'lyrebird_data_handler': [
-            'api_coverage = lyrebird_api_coverage.proxy.proxy_handler:MyDataHandler'
-        ],
-        'lyrebird_web': [
-            'api_coverage = lyrebird_api_coverage.app_ui:AppUI'
+        'lyrebird_plugin': [
+            'lyrebird_api_coverage = lyrebird_api_coverage.manifest'
         ]
     },
     install_requires=[
