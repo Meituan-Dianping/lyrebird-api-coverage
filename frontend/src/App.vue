@@ -8,7 +8,7 @@
             <info />
           </i-col>
           <i-col span="18" >
-            <api-list ></api-list>
+            <api-list />
           </i-col>
         </Row>
     </div>
@@ -20,7 +20,6 @@ import coverage from './components/coverage.vue'
 import info from './components/info.vue'
 import apiList from './components/apiList.vue'
 
-
 export default {
   name: 'app',
   created() {
@@ -29,8 +28,6 @@ export default {
     // Get basic data when new proxy or mock by socketio
     this.$io.on('apiCoverageBaseData', this.loadBasicDatas)
   },
-
-
   methods: {
     // Load basic datas : coveragedData、 baseInfo、 coverageDetail、
     loadBasicDatas() {
@@ -38,7 +35,6 @@ export default {
       this.$store.dispatch('loadBaseInfo')
       this.$store.dispatch('loadCoverageData')
     },
-
     // search input
     findTargetContext(targetContext) {
       // Create a list to save the display result data after the search
@@ -57,7 +53,6 @@ export default {
       // Assemble the ShowedAPIData for page display
       this.$store.dispatch('setShowedAPIData', ShowedAPIData)
     },
-
   },
   components: {
     banner,

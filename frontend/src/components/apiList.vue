@@ -12,7 +12,6 @@
   </div>
 </template>
 
-
 <script>
 import FlowDetail from '@/components/flowDetail.vue'
 
@@ -20,7 +19,6 @@ export default {
   components: {
     FlowDetail,
   },
-
   computed: {
     showedAPIData() {
       return this.$store.state.showedAPIData

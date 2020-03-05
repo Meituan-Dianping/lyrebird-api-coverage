@@ -1,7 +1,6 @@
 <template>
   <div v-if="flowDetail">
     <Row type="flex" justify="center" align="middle">
-
       <i-col span="23" class="small-tab">
         <Tabs :value="currentTab" :animated="false" size="small" @on-click="switchTab">
           <TabPane label="Request" name="req"></TabPane>

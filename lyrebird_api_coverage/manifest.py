@@ -6,7 +6,6 @@ from lyrebird_api_coverage.handlers.base_source_handler import BaseDataHandler
 from lyrebird_api_coverage.client.merge_algorithm import mergeAlgorithm
 from lyrebird_api_coverage.client.event_subscibe import event_subscribe
 
-
 # 执行插件初始化操作
 # 获取base_data_config文件信息
 base_dict = BaseDataHandler().get_base_source()

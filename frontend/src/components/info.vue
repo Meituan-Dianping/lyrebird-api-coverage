@@ -9,9 +9,6 @@
 
 <script>
 export default {
-  created() {
-
-  },
   computed: {
     business() {
       return this.$store.state.info.business
@@ -29,8 +26,8 @@ export default {
 
 <style  scoped>
 #info {
-        width: 300px !important;
+  width: 300px !important;
   height: 150px !important;
   margin: 30px 30px 0 30px;
-    }
+}
 </style>

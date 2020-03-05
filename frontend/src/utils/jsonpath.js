@@ -27,7 +27,6 @@ function isEven(n) {
   return n % 2 === 0
 }
 
-
 // Find the next end quote
 function findEndQuote(text, i) {
   while (i < text.length) {
@@ -60,7 +59,6 @@ function getJsonPath(text, offSet) {
   let pos = 0
   const stack = []
   let isInKey = false
-
   while (pos < offSet) {
     const startPos = pos
     let s = null

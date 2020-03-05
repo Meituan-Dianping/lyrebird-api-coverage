@@ -10,23 +10,19 @@ from lyrebird_api_coverage.handlers.import_file_handler import ImportHandler
 from lyrebird_api_coverage.handlers.result_handler import ResultHandler, PLUGINS_DUMP_DIR
 from lyrebird import context
 
-
 def generate(data):
     rtext = json.dumps(data)
     yield rtext
-
 
 # 获取内存里保存的测试结果API
 # /getTest
 def get_test_data():
     return Response(stream_with_context(generate({'test_data': app_context.merge_list})), content_type='application/json')
 
-
 # 获取内存里保存的测试覆盖率信息
 # /getCoverage
 def get_coverage():
     return Response(stream_with_context(generate(app_context.coverage)), content_type='application/json')
-
 
 # 保存测试数据在本地
 #  /saveResult
@@ -43,7 +39,6 @@ def resume_test():
     # resp = ResultHandler().resume_test()
     resp = ImportHandler().import_result_handler()
     return resp
-
 
 # 清空测试缓存结果
 # /clearResult
@@ -74,7 +69,6 @@ def get_filter_conf():
     else:
         return jsonify(msg)
 
-
 # 覆盖配置filter conf文件
 # /setFilterConf
 def set_filter_conf():
@@ -94,7 +88,6 @@ def dump():
     ResultHandler().dump_info(filename)
     return jsonify(
         [{'name': str(filename) + '.json', 'path': os.path.join(PLUGINS_DUMP_DIR, str(filename) + '.json')}])
-
 
 # base info
 # /baseInfo

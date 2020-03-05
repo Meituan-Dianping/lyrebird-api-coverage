@@ -1,6 +1,5 @@
 import getBaseInfo from '../apis/info'
 
-
 export default {
   state: {
     business: '',
@@ -17,7 +16,6 @@ export default {
     setVersionName(state, versionName) {
       state.versionName = versionName
     },
-
   },
   actions: {
     loadBaseInfo(context) {
