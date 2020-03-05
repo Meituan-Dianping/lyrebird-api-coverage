@@ -26,8 +26,8 @@ export default {
 
 <style  scoped>
 #info {
-  width: 300px !important;
-  height: 150px !important;
+  width: 80%;
+  height: 150px;
   margin: 30px 30px 0 30px;
 }
 </style>

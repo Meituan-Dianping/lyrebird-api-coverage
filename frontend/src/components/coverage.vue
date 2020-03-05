@@ -1,6 +1,7 @@
 <template>
   <div id="coverage" class="box box-solid">
     <Card>
+      <p dis-hover slot="title">Coverage</p>
       <table>
         <thead>
           <tr>
@@ -82,8 +83,8 @@ export default {
 
 <style scoped>
 #coverage {
-  width: 300px;
-  height: 150px;
+  width: 80%;
+  height: 200px;
   margin: 30px 30px 0 30px;
 }
 </style>
