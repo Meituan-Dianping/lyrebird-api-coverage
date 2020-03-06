@@ -15,16 +15,26 @@ jobs:
     - stage: release to pypi
       if: type = push AND tag IS present
       language: python
-      catch: pip
+      catch:
+        - pip
+        - npm
       python:
         - "3.6"
+      node_js:
+        - "10"
+      install:
+        - cd frontend
+        - npm install
+        - npm run build
+        - cd ..
       script:
-        - echo "Skipping tests"
+        - echo "No script for pypi release"
       deploy:
         provider: pypi
-        user: youngfreeFJS
+        skip_existing: true
+        skip-cleanup: true
+        user: "__token__"
         password:
-          secure: "o4eS7MJmEdB+YjgmDxJ53auMq8PgFeU4om7LUW2s8K4GnTOvCJSU1d3F7dY6G+RtvDZn/KNX6jrc116Wx7rpYveff6Lz+wdnLjTLTnspo8SFIyyNm30VvxgPxlM9ebjQfKs5nM/jepYaWumLSJG3Fne/aNbIivLYKHsJeUWMVCn+U2QXsACu0AvF0Bf7R2xOX9g3lLG/a09YrviBAQwMOMz6lhb/d2curEBcONL9B6Dba/ucH/Gd2nomvf4HX6MSox3cOwxJlTjLyS6cKk0n9oftRONYOKxECuFaiPmTbLPS6L5xk0aflXPFyEji7LTwgqSHtlSB9gXr1X7nfdoTqlciLkikYqIQExhgsfLGakRaGHrEmiex+KPFgRt+1/SFfkV8Quu+Ucyrl001g2PQrmrtREFV4aD4sZZE317eU9je6FGyM6nSC5rwaFEvsLmdTIMvG3j65pbNhLXahqlNVC0/i7Zg1gYP5vLNecYVd2dJIjD4oVNlgYCP5QzjfPID1vZxVBMsNOU1XpiK0rv0jXa2Dr4gNmsj4FQtQD5vEm6srAnIAGEYJHQYpmk01f8HV9FE9jHycAhdgE1QsfZ1PEKNI3BUwJ1DWCY2+XzUXXgFgEQ1D87OHkgwCBaJjM6uWIcIU5tSdyUJkjKQYqUlEfX3uKrFwk7hLuo33DZj8pg="
+          secure: "JtKD9bybNtLxSPzyXvbD6ugt2ctxQa7IixmXeO8as7V1dVOlc/7H6K1a9sw5TLBWua+O63cs2gvfQnIFCgA2NkvtJwflbRJYI+l08xaY4OjA4uTDqId+rGrjoaD9cO1KlIsHaF/MkTI4FQQoqCzo5JGpUM3Ah9yTNKjRVojxEejpitEnr543miPvjiDTl27MNTtrfFi0FPzakkBVi6Lxcj08j7MpL5+Y1KMn/lMWNyTP6eQ8YpXFisv9hxnZ0zmqSgv0XYvhugEZsXUXAWEdze18i215nxexuKH7RNkwCWraSWtgvZdj6Amlq7hVeJqRHjNhDlFXNIdG/VZC+3cXmi3Obp5XIdHYgp7sTW7FVyrpbYFAIMRxj5P0ZLoypH7oMDXVf0TLb5xtSIjYVMOWDAWOV022ZMTYow6gGgdCsyO78AaE2tY4Sr+XrYe87QTXNF89qb1/gGsjqLf4+GzUzMDTPkBLJGFTW1rIbTQbJ6ZzS4v15swxk1KPyL/Dt7J4OSElFriMNSgfdlXoyIn887HFc8FGC9TDfpth0eeW9G8dqwhki2wqu3Is3Mb6Na37mlgagqEBpLSZvPZuGKHHAv6nY6v/g2+shqKVSV2RBIN3ttVKn/ZKyw+kThcwOZ+NID+OZNly2Kk+52S9hmRzIordgST5DknkUvvz6bzEoP4="
         on:
           tags: true
-      
