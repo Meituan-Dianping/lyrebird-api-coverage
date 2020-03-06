@@ -110,6 +110,7 @@ export default {
       this.$refs.baseElem.dispatchEvent(new MouseEvent('click'))
     },
     importBase(e) {
+      // TODO 重新载入相同文件，未进行响应
       const file = document.getElementById('importBaseIpt')
       const filename = file.value
       if (!filename || !filename.endsWith('.json')) {

@@ -4,7 +4,7 @@
       <i-table height="1000" stripe :columns="columns" :data="showedAPIData" ></i-table>
       <Modal
         v-model="isApiDetailModalShow"
-        title="Custom width"
+        title="Flow Detail"
         width="1300">
         <FlowDetail></FlowDetail>
     </Modal>
