@@ -33,8 +33,7 @@ jobs:
         provider: pypi
         skip_existing: true
         skip-cleanup: true
-        user: "__token__"
-        password:
-          secure: "JtKD9bybNtLxSPzyXvbD6ugt2ctxQa7IixmXeO8as7V1dVOlc/7H6K1a9sw5TLBWua+O63cs2gvfQnIFCgA2NkvtJwflbRJYI+l08xaY4OjA4uTDqId+rGrjoaD9cO1KlIsHaF/MkTI4FQQoqCzo5JGpUM3Ah9yTNKjRVojxEejpitEnr543miPvjiDTl27MNTtrfFi0FPzakkBVi6Lxcj08j7MpL5+Y1KMn/lMWNyTP6eQ8YpXFisv9hxnZ0zmqSgv0XYvhugEZsXUXAWEdze18i215nxexuKH7RNkwCWraSWtgvZdj6Amlq7hVeJqRHjNhDlFXNIdG/VZC+3cXmi3Obp5XIdHYgp7sTW7FVyrpbYFAIMRxj5P0ZLoypH7oMDXVf0TLb5xtSIjYVMOWDAWOV022ZMTYow6gGgdCsyO78AaE2tY4Sr+XrYe87QTXNF89qb1/gGsjqLf4+GzUzMDTPkBLJGFTW1rIbTQbJ6ZzS4v15swxk1KPyL/Dt7J4OSElFriMNSgfdlXoyIn887HFc8FGC9TDfpth0eeW9G8dqwhki2wqu3Is3Mb6Na37mlgagqEBpLSZvPZuGKHHAv6nY6v/g2+shqKVSV2RBIN3ttVKn/ZKyw+kThcwOZ+NID+OZNly2Kk+52S9hmRzIordgST5DknkUvvz6bzEoP4="
+        user: __token__
+        password: ${{ secrets.pypi_password }}
         on:
           tags: true
