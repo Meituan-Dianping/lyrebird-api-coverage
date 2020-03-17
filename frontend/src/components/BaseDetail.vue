@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import CodeEditor from './CodeEditor'
+import CodeEditor from './CodeEditor.vue'
 
 export default {
   name: 'flowDetail',

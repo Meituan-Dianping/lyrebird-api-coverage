@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import ButtonBar from './components/ButtonBar'
-import CoverageStats from './components/CoverageStats'
-import BaseInfo from './components/BaseInfo'
-import BaseList from './components/BaseList'
+import ButtonBar from './components/ButtonBar.vue'
+import CoverageStats from './components/CoverageStats.vue'
+import BaseInfo from './components/BaseInfo.vue'
+import BaseList from './components/BaseList.vue'
 
 export default {
   name: 'app',
