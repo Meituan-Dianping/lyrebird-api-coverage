@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as apis from '@/apis'
-import info from '@/store/info'
-import apiList from '@/store/apiList'
+import baseInfo from '@/store/baseInfo'
+import baseList from '@/store/baseList'
 
 Vue.use(Vuex)
 
@@ -50,7 +50,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    info,
-    apiList,
+    baseInfo,
+    baseList,
   },
 })

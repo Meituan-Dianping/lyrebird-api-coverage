@@ -6,18 +6,18 @@
         v-model="isApiDetailModalShow"
         title="Flow Detail"
         width="1300">
-        <FlowDetail></FlowDetail>
+        <base-detail></base-detail>
     </Modal>
     </div>
   </div>
 </template>
 
 <script>
-import FlowDetail from '@/components/flowDetail.vue'
+import BaseDetail from './BaseDetail.vue'
 
 export default {
   components: {
-    FlowDetail,
+    BaseDetail,
   },
   computed: {
     showedAPIData() {
@@ -32,7 +32,6 @@ export default {
   },
   data() {
     return {
-      msg: 1,
       columns: [
         {
           title: 'Priority',
@@ -123,8 +122,6 @@ export default {
           },
         },
       ],
-      table_data: [],
-      api_id: '',
       isApiDetailModalShow: false,
     }
   },

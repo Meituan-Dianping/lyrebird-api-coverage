@@ -1,6 +1,6 @@
 <template>
   <Card id="info">
-    <p dis-hover slot="title">Info</p>
+    <p dis-hover slot="title">Base Info</p>
     <li> business : {{business}} </li>
     <li> versionCode : {{versionCode}} </li>
     <li> versionName : {{versionName}} </li>
@@ -11,13 +11,13 @@
 export default {
   computed: {
     business() {
-      return this.$store.state.info.business
+      return this.$store.state.baseInfo.business
     },
     versionCode() {
-      return this.$store.state.info.versionCode
+      return this.$store.state.baseInfo.versionCode
     },
     versionName() {
-      return this.$store.state.info.versionName
+      return this.$store.state.baseInfo.versionName
     },
   },
 

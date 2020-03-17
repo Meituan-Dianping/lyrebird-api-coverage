@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import CodeEditor from '@/components/CodeEditor.vue'
+import CodeEditor from './CodeEditor.vue'
 
 export default {
   name: 'flowDetail',
@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     flowDetail() {
-      return this.$store.state.apiList.focusedFlowDetail
+      return this.$store.state.baseList.focusedFlowDetail
     },
     codeContents() {
       let codeContent = ''
