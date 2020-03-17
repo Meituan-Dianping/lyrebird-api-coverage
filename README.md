@@ -158,7 +158,7 @@ pip3 install -r requirements.txt
         - regular:不关注的字符串（URL只要包含指定的字符串都会筛选掉）
 
 ### 调试代码配置 (use vscode)
-```json
+```javascript
 {
     // 使用 IntelliSense 了解相关属性。
     // 悬停以查看现有属性的描述。
