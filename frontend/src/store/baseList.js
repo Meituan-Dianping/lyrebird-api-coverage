@@ -1,4 +1,4 @@
-import getFlowDetail from '../apis/apiList'
+import getFlowDetail from '../apis/baseList'
 
 export default {
   state: {

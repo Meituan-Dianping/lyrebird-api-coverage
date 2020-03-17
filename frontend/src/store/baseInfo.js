@@ -1,4 +1,4 @@
-import getBaseInfo from '../apis/info'
+import getBaseInfo from '../apis/baseInfo'
 
 export default {
   state: {

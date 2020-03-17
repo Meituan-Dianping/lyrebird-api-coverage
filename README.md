@@ -1,6 +1,10 @@
 # Lyrebird Plugin API-Coverage
 
-[![Build Status](https://travis-ci.org/meituan/lyrebird-api-coverage.svg?branch=master)](https://travis-ci.org/meituan/lyrebird-api-coverage)
+[![PyPI](https://img.shields.io/pypi/v/lyrebird-api-coverage.svg)](https://pypi.org/project/lyrebird-api-coverage/)
+![PyPI](https://img.shields.io/pypi/pyversions/lyrebird.svg)
+![GitHub](https://img.shields.io/github/license/meituan/lyrebird-api-coverage.svg)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/lyrebird-api-coverage.svg)
+[![Doc](https://img.shields.io/badge/docs-github_page-green.svg)](https://meituan-dianping.github.io/lyrebird/plugins/api-coverage.html)
 
 ## 简介
 * API-Coverage是基于[Lyrebird](https://github.com/meituan/lyrebird)的插件，为客户端提供API维度测试覆盖评估方法。 
@@ -153,3 +157,38 @@ pip3 install -r requirements.txt
         - host:不关注的host
         - regular:不关注的字符串（URL只要包含指定的字符串都会筛选掉）
 
+### 调试代码配置 (use vscode)
+```json
+{
+    // 使用 IntelliSense 了解相关属性。
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "backend",
+            "type": "python",
+            "request": "launch",
+            "module": "lyrebird",
+            "console": "integratedTerminal",
+            "args": [
+                "-vv",
+                "--plugin",
+                "${workspaceFolder}"
+            ]
+        },
+        {
+            "name": "frontend",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/ui/static/",
+            "webRoot": "${workspaceFolder}/frontend/src/",
+            "breakOnLoad": true,
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
+        }
+    ]
+}
+
+```

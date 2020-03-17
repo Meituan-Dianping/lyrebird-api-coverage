@@ -1,2 +1,3 @@
 lyrebird
 jsonschema
+pytest

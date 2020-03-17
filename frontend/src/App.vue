@@ -1,24 +1,24 @@
 <template>
     <div id='app'>
-        <banner @newbase="loadBasicDatas" @poptarget="findTargetContext" ></banner>
+        <button-bar @newbase="loadBasicDatas" @poptarget="findTargetContext" ></button-bar>
         <Divider style="margin:0" />
         <Row>
           <i-col span="6">
-            <coverage />
-            <info />
+            <coverage-stats />
+            <base-info />
           </i-col>
           <i-col span="18" >
-            <api-list />
+            <base-list />
           </i-col>
         </Row>
     </div>
 </template>
 
 <script>
-import banner from './components/banner.vue'
-import coverage from './components/coverage.vue'
-import info from './components/info.vue'
-import apiList from './components/apiList.vue'
+import ButtonBar from './components/ButtonBar'
+import CoverageStats from './components/CoverageStats'
+import BaseInfo from './components/BaseInfo'
+import BaseList from './components/BaseList'
 
 export default {
   name: 'app',
@@ -55,10 +55,10 @@ export default {
     },
   },
   components: {
-    banner,
-    coverage,
-    info,
-    apiList,
+    ButtonBar,
+    CoverageStats,
+    BaseInfo,
+    BaseList,
   },
 }
 </script>

@@ -198,9 +198,7 @@ export default {
                 on: {
                   click: (e) => {
                     // 获取需要复制的文字
-                    const copyStr = e.target.offsetParent.innerText.split(
-                      ':',
-                    )[1]
+                    const copyStr = e.target.offsetParent.innerText.split(':')[1]
                     // 创建input标签存放需要复制的文字
                     const oInput = document.createElement('input')
                     // 把文字放进input中，供复制
