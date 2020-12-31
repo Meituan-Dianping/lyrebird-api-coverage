@@ -65,6 +65,6 @@ export default {
 
 <style scoped>
 #app {
-  min-width: 1500px;
+  min-width: 1390px;
 }
 </style>
