@@ -1,2 +1,1 @@
-lyrebird
-jsonschema
+-e .[dev]

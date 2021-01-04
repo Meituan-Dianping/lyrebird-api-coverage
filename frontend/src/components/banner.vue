@@ -1,6 +1,6 @@
 <template>
   <Row>
-    <i-col span="18" class="colLeft">
+    <i-col span="24" class="colLeft">
       <Button
         class="btn"
         :size="buttonSize"
@@ -77,8 +77,6 @@
           </div>
         </form>
       </modal>
-    </i-col>
-    <i-col span="6" class="colRight">
       <Input
         class="searchInput"
         v-model="targetContext"
@@ -318,9 +316,9 @@ export default {
 .colLeft .btn {
   margin: 10px 5px 10px 5px;
 }
-.colRight .searchInput {
+.colLeft .searchInput {
   margin: 10px 5px 10px 5px;
   width: 300px;
-  min-width: 350px;
+  float: right;
 }
 </style>

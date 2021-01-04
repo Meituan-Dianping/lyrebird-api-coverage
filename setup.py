@@ -35,6 +35,12 @@ setup(
     install_requires=[
         'lyrebird',
         'jsonschema'
-    ]
-
+    ],
+    extras_require={
+        'dev': [
+            "autopep8",
+            "pylint",
+            "pytest"
+        ]
+    }
 )

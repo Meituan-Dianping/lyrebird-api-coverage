@@ -1,7 +1,7 @@
 <template>
   <div id="tab" class="box box-solid">
-    <div class="box-body" style="height:80vh; overflow:auto">
-      <i-table height="1000" stripe :columns="columns" :data="showedAPIData" ></i-table>
+    <div class="box-body" style="max-height:calc(100vh - 100px); overflow:auto">
+      <i-table stripe :columns="columns" :data="showedAPIData" ></i-table>
       <Modal
         v-model="isApiDetailModalShow"
         title="Flow Detail"
@@ -134,7 +134,6 @@ export default {
 
 <style  scoped>
 #tab {
-  background-color: pink;
   width: 100%;
   height: 100%;
   margin-top: 30px;
