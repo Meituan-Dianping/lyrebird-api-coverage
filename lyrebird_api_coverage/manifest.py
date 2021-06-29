@@ -19,6 +19,7 @@ event_subscribe()
 manifest(
     id='api_coverage',
     name='APICoverage',
+    icon='mdi-google-analytics',
     api=[
         # 获取内存里保存的测试结果API
         ('/api/getTest', api.get_test_data),
