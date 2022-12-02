@@ -16,7 +16,7 @@
 
 * macOS
 
-* Python3.6及以上
+* Python3.7及以上
 
 
 ## 安装
