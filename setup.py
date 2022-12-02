@@ -33,7 +33,7 @@ setup(
         ]
     },
     install_requires=[
-        'lyrebird',
+        'lyrebird>=2.10.3',
         'jsonschema'
     ],
     extras_require={
