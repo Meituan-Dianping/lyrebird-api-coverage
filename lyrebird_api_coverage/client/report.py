@@ -29,7 +29,7 @@ class ReportHandler:
 report_handler = ReportHandler()
 
 
-def report_worker(url, device_ip):
+def report_worker(url, device_ip, category_name):
     update_data = report_handler.check_url_info(url, device_ip)
-    update_data.update({"action": "api-coverage", "user_info": app_context.user_info})
+    update_data.update({'action': 'api-coverage', 'user_info': app_context.user_info, 'category':category_name})
     report(update_data)

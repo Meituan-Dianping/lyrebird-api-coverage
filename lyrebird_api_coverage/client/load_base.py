@@ -1,10 +1,11 @@
 import codecs
+from distutils.file_util import copy_file
 import hashlib
 import json
 import lyrebird
 from lyrebird.log import get_logger
 import os
-
+from lyrebird_api_coverage.client.api_base_init import load_api_base
 from lyrebird_api_coverage.client.context import app_context
 
 PLUGINS_CONF_DIR = lyrebird.get_plugin_storage()
@@ -25,12 +26,19 @@ def auto_load_base():
     # 读取指定base文件，写入到base.json
     if lyrebird_conf.get('hunter.base'):
         base_path = lyrebird_conf.get('hunter.base')
-        base = codecs.open(base_path, 'r', 'utf-8').read()
-        f = codecs.open(DEFAULT_BASE, 'w', 'utf-8')
-        f.write(base)
-        f.close()
-        app_context.base_sha1 = get_file_sha1(DEFAULT_BASE)
-        return json.loads(base)
+        user_business = lyrebird_conf.get('user.business')
+
+        # 判断是否需要实时获取接口数据
+        if base_path.endswith('.py'):
+            app_context.api_base_data = True
+            return load_api_base(user_business)
+        else:
+            base = codecs.open(base_path, 'r', 'utf-8').read()
+            f = codecs.open(DEFAULT_BASE, 'w', 'utf-8')
+            f.write(base)
+            f.close()
+            app_context.base_sha1 = get_file_sha1(DEFAULT_BASE)
+            return json.loads(base)
     # 通过本地默认base文件获取base
     elif not os.path.exists(DEFAULT_BASE):
         copy_file(DEFAULT_BASE)
