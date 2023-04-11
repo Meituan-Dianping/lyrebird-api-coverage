@@ -2,9 +2,9 @@
   <div id="tab" class="box box-solid">
     <div class="box-body" style="max-height:calc(100vh - 100px) overflow:auto">
       <i-table stripe :columns="columns" :data="showedAPIData">
-        <template #product="{ row, index }">
-          <template v-if="row.products.length > 0">
-            <template v-for="item in row.products">
+        <template #category="{ row, index }">
+          <template v-if="row.category.length > 0">
+            <template v-for="item in row.category">
               <Tag v-if="item.status == 1" color="green">{{
                 item.label.split("-")[0]
               }}</Tag>
@@ -12,9 +12,12 @@
           </template>
         </template>
       </i-table>
-      <Modal v-model="isApiDetailModalShow" title="Flow Detail" width="1300">
+      <Modal
+        v-model="isApiDetailModalShow"
+        title="Flow Detail"
+        width="1300">
         <FlowDetail></FlowDetail>
-      </Modal>
+    </Modal>
     </div>
   </div>
 </template>
@@ -64,18 +67,15 @@ export default {
           key: 'count',
           sortable: true,
         },
-        
         {
           title: 'Status',
           key: 'status',
           render: (h, params) => {
             if (params.row.status === 0) {
               return h('p', { style: { color: 'orange' } }, 'NotTest')
-            }
-            if (params.row.status === 1) {
+            } if (params.row.status === 1) {
               return h('p', { style: { color: 'green' } }, 'Tested')
-            }
-            if (params.row.status === 2) {
+            } if (params.row.status === 2) {
               return h('p', 'NewAPI')
             }
             return h('p', null)
@@ -99,20 +99,18 @@ export default {
           filterMethod(value, row) {
             if (value === 1) {
               return row.status === 1
-            }
-            if (value === 2) {
+            } if (value === 2) {
               return row.status === 2
-            }
-            if (value === 0) {
+            } if (value === 0) {
               return row.status === 0
             }
             return row.status === null
           },
         },
         {
-          title: 'Coverage-Product',
-          key: 'product',
-          slot: 'product',
+          title: 'Coverage-Category',
+          key: 'category',
+          slot: 'category',
           sortable: true,
         },
         {
@@ -130,13 +128,13 @@ export default {
                     },
                   },
                 },
-                'Detail'
+                'Detail',
               )
             }
             return h(
               'i-button',
               { props: { size: 'small', type: 'dashed', disabled: true } },
-              'Detail'
+              'Deatil',
             )
           },
         },
@@ -146,6 +144,7 @@ export default {
       isApiDetailModalShow: false,
     }
   },
+
 }
 </script>
 

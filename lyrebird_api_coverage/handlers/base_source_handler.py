@@ -46,7 +46,7 @@ class BaseDataHandler:
     def check_base(self, obj):
         try:
             # 检查base schema
-            if not app_context.api_base_data:
+            if not app_context.is_api_base_data:
                 check_schema(obj)
             # 检查url是否有重复项存在
             redundant_items = check_url_redundant(obj)
@@ -61,15 +61,11 @@ class BaseDataHandler:
                 lyrebird.publish('api_coverage', 'error', name='import_base')
                 return resp
             # 获取base内容，解析出base的business等字段
-            filename = str(obj.get('business')) + str(obj.get('version_name')) + '.' + str(obj.get('version_code'))
+            filename = obj.get('business') + obj.get('version_name') + '.' + str(obj.get('version_code'))
             app_context.filename = filename
-            lyrebird_conf = lyrebird.context.application.conf
-            if app_context.api_base_data:
-                app_context.business = lyrebird_conf.get('user.business')
-            else:
-                app_context.business = obj.get('business')
-                app_context.version_name = obj.get('version_name')
-                app_context.version_code = obj.get('version_code')
+            app_context.business = obj.get('business', '')
+            app_context.version_name = obj.get('version_name', '--')
+            app_context.version_code = obj.get('version_code', '--')
             return
         except Exception as e:
             resp = context.make_fail_response(f'导入文件有误: {e}\n请重新import base')
