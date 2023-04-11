@@ -22,7 +22,7 @@ def on_request(msg):
     short_url = msg['flow']['request']['url'].replace('http://', '').replace('https://', '').split('?')[0]
     # format之后的真正PATH，处理{num}这样的情况，emit给前端，做刷新table用，同时处理成小写
     path = format_url.format_api(short_url).lower()
-    new_path = urlparse(msg['flow']['request']['url']).path.lower()
+    new_path = format_url.format_api(urlparse(msg['flow']['request']['url']).path).lower()
     # 获取handler_context.id，为前端展开看详情准备
     path_id = msg['flow']['id']
     device_ip = msg['flow']['client_address']
