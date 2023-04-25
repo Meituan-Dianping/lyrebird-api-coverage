@@ -43,7 +43,6 @@ class BaseDataHandler:
     '''
     检查base是否符合规则
     '''
-
     def check_base(self, obj):
         try:
             # 检查base schema
