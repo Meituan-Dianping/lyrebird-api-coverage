@@ -25,6 +25,8 @@ def on_request(msg):
     device_ip = msg['flow']['client_address']
     # 获取产品信息
     lyrebird_conf = lyrebird.context.application.conf
+    # 初始化产品信息
+    app_context.category = ''
     # 读取产品映射关系
     if lyrebird_conf.get('apicoverage.category'):
         for item in lyrebird_conf.get('apicoverage.category'):

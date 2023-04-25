@@ -60,8 +60,8 @@ class BaseDataHandler:
                 resp = context.make_fail_response('导入API有重复项' + str(redundant_items))
                 lyrebird.publish('api_coverage', 'error', name='import_base')
                 return resp
-            # 获取base内容，解析出base的business等字段
-            filename = obj.get('business') + obj.get('version_name') + '.' + str(obj.get('version_code'))
+            # 获取base内容，解析出base的business等字段 
+            filename = f'''{obj.get('business','')}{obj.get('version_name','')}{obj.get('version_code','')}'''
             app_context.filename = filename
             app_context.business = obj.get('business', '')
             app_context.version_name = obj.get('version_name', '--')

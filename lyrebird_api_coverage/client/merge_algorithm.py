@@ -86,30 +86,25 @@ class MergeAlgorithm:
                         p['status'] = 1
                         p['count'] += 1
                         p['id'] = path_id
-                        if specific_dic['status'] == 0:
-                            specific_dic['status'] = 1
                     elif category == p.get('mpId') and p['status'] == 0:
                         p['status'] = 1
                         p['count'] += 1
                         p['id'] = path_id
-                        if specific_dic['status'] == 0:
-                            specific_dic['status'] = 1
+                if specific_dic['status'] == 0:
+                    specific_dic['status'] = 1
+                    # 把首次覆盖到的API,放入user_list里面
+                    app_context.user_list.append(user_url)
             else:
-                # 把首次覆盖到的API,放入user_list里面
-                app_context.user_list.append(user_url)
-                specific_dic['count'] += 1
-                specific_dic['status'] = 1
                 # 非接口获取base数据
                 if specific_dic['status'] == 0:
                     specific_dic['status'] = 1
                     # 把首次覆盖到的API,放入user_list里面
                     app_context.user_list.append(user_url)
-                # count +1
-                # 插入原始url  # specific_dic['org'].append(org_url)
-                specific_dic['count'] += 1
-                specific_dic['id'] = path_id
+            # count +1
+            specific_dic['count'] += 1  # 插入原始url  # specific_dic['org'].append(org_url)
+            specific_dic['id'] = path_id
         else:
-            if app_context.is_api_base_data == False:
+            if app_context.is_api_base_data:
                 specific_dic = {'url': user_url, 'desc': '', 'priority': None, 'count': 1, 'online': None, 'remark': None, 'status': 2, 'category': []}
                 specific_dic.get('category').append({'id': None, 'name': category, 'status': 2, 'count': 1})
             else:
