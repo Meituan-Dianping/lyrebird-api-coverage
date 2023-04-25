@@ -6,9 +6,11 @@ from lyrebird import report
 ps:需要在lyrebird中设定reporter相关配置
 """
 
+
 class ReportHandler:
     def check_url_info(self, url, device_ip):
-        specific_list = list(filter(lambda x: x.get('url') == url, app_context.merge_list))
+        specific_list = list(filter(lambda x: x.get(
+            'url') == url, app_context.merge_list))
         if specific_list and specific_list[0].get('status') == 1:
             desc = specific_list[0].get('desc')
             count_flag = 1
@@ -29,7 +31,8 @@ class ReportHandler:
 report_handler = ReportHandler()
 
 
-def report_worker(url, device_ip, category_name):
+def report_worker(url, device_ip, category):
     update_data = report_handler.check_url_info(url, device_ip)
-    update_data.update({'action': 'api-coverage', 'user_info': app_context.user_info, 'category':category_name})
+    update_data.update({'action': 'api-coverage',
+                       'user_info': app_context.user_info, 'category': category})
     report(update_data)
