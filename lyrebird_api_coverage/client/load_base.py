@@ -65,10 +65,8 @@ def auto_load_base():
 
 
 def copy_file(target_path):
-    os.path.abspath(os.path.join(
-        CURRENT_DIR, '..', './default_conf/base.json'))
-    f_from = codecs.open(os.path.abspath(os.path.join(
-        CURRENT_DIR, '..', './default_conf/base.json')), 'r', 'utf-8')
+    os.path.abspath(os.path.join(CURRENT_DIR, '..', './default_conf/base.json'))
+    f_from = codecs.open(os.path.abspath(os.path.join(CURRENT_DIR, '..', './default_conf/base.json')), 'r', 'utf-8')
     f_to = codecs.open(target_path, 'w', 'utf-8')
     f_to.write(f_from.read())
     f_to.close()

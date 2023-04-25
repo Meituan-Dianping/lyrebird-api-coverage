@@ -28,8 +28,7 @@ class MergeAlgorithm:
         # 初始化coverage数据
         self.coverage_arithmetic(json_obj)
         # 获取所有的base URL
-        app_context.base_list = list(
-            map(lambda x: x.get('url'), json_obj.get('api_list')))
+        app_context.base_list = list(map(lambda x: x.get('url'), json_obj.get('api_list')))
 
     def init_basedata_handler(self, dic):
         # for k, v in dic.items():
@@ -73,8 +72,7 @@ class MergeAlgorithm:
         """
 
         # 在list中筛选出想要的数据,筛选结果直接取0即可
-        specific_filter_list = list(
-            filter(lambda x: x.get('url') == user_url, app_context.merge_list))
+        specific_filter_list = list(filter(lambda x: x.get('url') == user_url, app_context.merge_list))
 
         # 判断筛选出来的list是否为空,即是否在list中存在
         if specific_filter_list:
@@ -131,8 +129,7 @@ class MergeAlgorithm:
         """
         # 获取handle前的历史覆盖率为做对比用
         history_coverage = app_context.coverage['total']
-        test_len = len(
-            list(filter(lambda x: x.get('status') == 1, app_context.merge_list)))
+        test_len = len(list(filter(lambda x: x.get('status') == 1, app_context.merge_list)))
         if app_context.coverage['len'] == 0:
             coverage = 0
         else:
@@ -144,17 +141,15 @@ class MergeAlgorithm:
             handler_time = time.time()
             # 限制频繁emit io msg，在两次之间大于指定时间间隔才会emit
             if handler_time - app_context.covtime > app_context.SOCKET_PUSH_INTERVAL:
-                lyrebird.emit('coverage message', app_context.coverage.get(
-                    'total'), namespace='/api_coverage')
+                lyrebird.emit('coverage message', app_context.coverage.get('total'), namespace='/api_coverage')
                 app_context.covtime = handler_time
-            by_priority = [p.get('value')
-                           for p in app_context.coverage['priorities']]
-            lyrebird.publish('coverage',
-                             dict(
-                                 name='coverage',
-                                 value=app_context.coverage.get('total'),
-                                 by_priority=by_priority)
-                             )
+            by_priority = [p.get('value') for p in app_context.coverage['priorities']]
+            lyrebird.publish('coverage', 
+                dict(
+                    name='coverage', 
+                    value=app_context.coverage.get('total'), 
+                    by_priority=by_priority)
+            )
         app_context.coverage['test_len'] = test_len
         # 各优先级对应覆盖率
         for item_dic in app_context.coverage.get('priorities'):
@@ -183,8 +178,7 @@ class MergeAlgorithm:
     def coverage_arithmetic(self, dic):
         url_info_list = dic.get('api_list')
         # 获取优先级list，非空
-        priority_list = list(
-            set(list(map(lambda x: x.get('priority'), url_info_list))))
+        priority_list = list(set(list(map(lambda x: x.get('priority'), url_info_list))))
         # 去除空值
         if list(filter(lambda x: x == '', priority_list)):
             priority_list.remove('')
@@ -198,8 +192,7 @@ class MergeAlgorithm:
         app_context.coverage['priorities'] = []
         # 各个优先级的init数据
         for item in app_context.priority_list:
-            item_length = len(
-                list(filter(lambda x: x.get('priority') == item, url_info_list)))
+            item_length = len(list(filter(lambda x: x.get('priority') == item, url_info_list)))
             coverage = 0
             app_context.coverage['priorities'].append(
                 {'label': item, 'value': coverage, 'len': item_length, 'test_len': 0})
@@ -212,28 +205,22 @@ class MergeAlgorithm:
         cache_url_list = list(map(lambda x: x.get('url'), cache_list))
         result_url_list = list(map(lambda x: x.get('url'), result_list))
         # 找到交集
-        intersection_list = list(
-            set(cache_url_list).intersection(set(result_url_list)))
+        intersection_list = list(set(cache_url_list).intersection(set(result_url_list)))
         # 对交集进行处理
         for url in intersection_list:
-            cache_spec = list(
-                filter(lambda x: x.get('url') == url, cache_list))[0]
-            result_spec = list(
-                filter(lambda x: x.get('url') == url, result_list))[0]
-            spec_dict = list(filter(lambda x: x.get('url') ==
-                             url, app_context.merge_list))[0]
+            cache_spec = list(filter(lambda x: x.get('url') == url, cache_list))[0]
+            result_spec = list(filter(lambda x: x.get('url') == url, result_list))[0]
+            spec_dict = list(filter(lambda x: x.get('url') == url, app_context.merge_list))[0]
             app_context.merge_list.remove(spec_dict)
             # 修改count status org_url
-            spec_dict['count'] = cache_spec.get(
-                'count') + result_spec.get('count')
+            spec_dict['count'] = cache_spec.get('count') + result_spec.get('count')
             if spec_dict['status'] == 0 and spec_dict['count'] != 0:
                 spec_dict['status'] = 1
             app_context.merge_list.insert(0, spec_dict)
         # 找到差集
         diff_url_list = list(set(result_url_list) - set(cache_url_list))
         # 差集处理（对result中存在，但cache不存在的）status=2的情景进行extend处理
-        diff_list = list(filter(lambda x: True if x.get(
-            'url') in diff_url_list else False, result_list))
+        diff_list = list(filter(lambda x: True if x.get('url') in diff_url_list else False, result_list))
         app_context.merge_list.extend(diff_list)
         # 重新计算覆盖率
         self.coverage_handler()

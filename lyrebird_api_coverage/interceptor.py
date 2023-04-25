@@ -24,7 +24,6 @@ def on_request(msg):
     # 获取handler_context.id，为前端展开看详情准备
     path_id = msg['flow']['id']
     device_ip = msg['flow']['client_address']
-
     # 获取产品信息
     lyrebird_conf = lyrebird.context.application.conf
     # 读取产品映射关系

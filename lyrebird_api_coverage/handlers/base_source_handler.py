@@ -23,14 +23,11 @@ logger = get_logger()
 '''
 Base 处理器
 '''
-
-
 class BaseDataHandler:
 
     '''
     获取base文件
     '''
-
     def get_base_source(self):
         json_obj = auto_load_base()
         if not json_obj:
@@ -61,17 +58,15 @@ class BaseDataHandler:
                     f'{len(redundant_items)} duplicated API:\n'
                     f'{redundant_items_str}\n'
                 )
-                resp = context.make_fail_response(
-                    '导入API有重复项' + str(redundant_items))
+                resp = context.make_fail_response('导入API有重复项' + str(redundant_items))
                 lyrebird.publish('api_coverage', 'error', name='import_base')
                 return resp
             # 获取base内容，解析出base的business等字段
-            # 
-            filename = f'''{obj.get('business','')}{obj.get('version_name','')}{obj.get('version_code','')}'''
+            filename = obj.get('business') + obj.get('version_name') + '.' + str(obj.get('version_code'))
             app_context.filename = filename
             app_context.business = obj.get('business', '')
-            app_context.version_name = obj.get('version_name', '')
-            app_context.version_code = obj.get('version_code', '')
+            app_context.version_name = obj.get('version_name', '--')
+            app_context.version_code = obj.get('version_code', '--')
             return
         except Exception as e:
             resp = context.make_fail_response(f'导入文件有误: {e}\n请重新import base')

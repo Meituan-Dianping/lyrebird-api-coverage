@@ -1,8 +1,6 @@
 """
 上下文，保存缓存数据
 """
-
-
 class Context:
     def __init__(self):
         # base url list
