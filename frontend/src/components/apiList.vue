@@ -48,19 +48,16 @@ export default {
           title: 'Priority',
           key: 'priority',
           sortable: true,
-          // width: 110,
         },
         {
           title: 'API',
           key: 'url',
           sortable: true,
-          // width: 380,
         },
         {
           title: 'Description',
           key: 'desc',
           sortable: true,
-          // width: 200,
         },
         {
           title: 'Count',
@@ -134,7 +131,7 @@ export default {
             return h(
               'i-button',
               { props: { size: 'small', type: 'dashed', disabled: true } },
-              'Deatil',
+              'NotTest',
             )
           },
         },

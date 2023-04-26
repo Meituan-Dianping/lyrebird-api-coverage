@@ -31,8 +31,7 @@ def on_request(msg):
     if lyrebird_conf.get('apicoverage.category'):
         for item in lyrebird_conf.get('apicoverage.category'):
             params = req_msg.get('request').get(item.get('params_source'))
-            new_params = {key.lower(): value for key,
-                            value in params.items()}
+            new_params = {key.lower(): value for key, value in params.items()}
             if item.get('keyWord') != '' and params.get(item['params']) and params.get(item['params']).startswith(item.get('keyWord')):
                 app_context.category = item.get('categoryName')
                 break
@@ -78,7 +77,7 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
                     url_pgroup = url_pgroup + '&' + str(p) + '=' + str(val)
                 else:
                     url_pgroup = path + '?' + str(p) + '=' + str(val)
-            mergeAlgorithm.merge_handler_new(url_pgroup, path_id)
+            mergeAlgorithm.merge_handler_new(url_pgroup, path_id, category)
             mergeAlgorithm.coverage_handler()
             report_worker(url_pgroup, device_ip, category)
         # 计算差值，指定时间间隔内只发1次io msg，限制刷新频率
@@ -88,7 +87,6 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
         # mergeAlgorithm.merge_handler_new(path, path_id)
         # 进行上报
         report_worker(path, device_ip, category)
-
 
 def emit(starttime, path):
         duration = starttime - app_context.endtime
