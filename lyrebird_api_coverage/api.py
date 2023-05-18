@@ -17,7 +17,7 @@ def generate(data):
 # 获取内存里保存的测试结果API
 # /getTest
 def get_test_data():
-    return context.make_ok_response(test_data=app_context.merge_list) # ?
+    return context.make_ok_response(test_data=app_context.merge_list)
 
 # 获取内存里保存的测试覆盖率信息
 # /getCoverage

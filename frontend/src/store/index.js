@@ -28,7 +28,7 @@ export default new Vuex.Store({
       apis
         .getTest()
         .then((response) => {
-          context.commit('setDetailData', response.data.test_data) // ?
+          context.commit('setDetailData', response.data.test_data)
           context.commit('setShowedAPIData', response.data.test_data)
         })
         .catch(() => {
