@@ -2,14 +2,12 @@
   <div id="tab" class="box box-solid">
     <div class="box-body" style="max-height:calc(100vh - 100px) overflow:auto">
       <i-table stripe :columns="columns" :data="showedAPIData">
-        <template #category="{ row, index }">
-          <template v-if="row.category.length > 0">
-            <template v-for="item in row.category">
-              <Tag v-if="item.status == 1" color="green">{{
-                item.label.split("-")[0]
-              }}</Tag>
-            </template>
-          </template>
+        <template #category="{ row }">
+          <span v-if="row.category.length !== 0">
+            <span v-for="(item, index) in row.category" :key="index">
+              <Tag v-if="item.status == 1" color="green">{{item.label}}</Tag>
+            </span>
+          </span>
         </template>
       </i-table>
       <Modal
@@ -105,7 +103,7 @@ export default {
           },
         },
         {
-          title: 'Coverage-Category',
+          title: 'Category',
           key: 'category',
           slot: 'category',
           sortable: true,

@@ -17,12 +17,12 @@ def generate(data):
 # 获取内存里保存的测试结果API
 # /getTest
 def get_test_data():
-    return Response(stream_with_context(generate({'test_data': app_context.merge_list})), content_type='application/json')
+    return context.make_ok_response(test_data=app_context.merge_list) # ?
 
 # 获取内存里保存的测试覆盖率信息
 # /getCoverage
 def get_coverage():
-    return Response(stream_with_context(generate(app_context.coverage)), content_type='application/json')
+    return context.make_ok_response(coverage = app_context.coverage)
 
 # 保存测试数据在本地
 #  /saveResult

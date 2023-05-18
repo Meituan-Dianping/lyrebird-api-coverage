@@ -50,6 +50,7 @@ class MergeAlgorithm:
                         key = i.split('=')[0]
                         val = i.split('=')[1]
                         param_dic[key] = val
+
                     if app_context.path_param_dic.get(path):
                         app_context.path_param_dic[path].append({'url': item['url'], 'params': param_dic,
                                                                 'url_base': format_url.format_api_source(
@@ -59,8 +60,7 @@ class MergeAlgorithm:
                                                             'url_base': format_url.format_api_source(
                                                                 item.get('url')).lower()}]
                 # format base源 同时变成大小写归一化，变小写
-                item['url'] = format_url.format_api_source(
-                    item.get('url')).lower()
+                item['url'] = format_url.format_api_source(item.get('url')).lower()
                 item.update(dict2)
                 app_context.merge_list.append(item)
 
@@ -86,10 +86,6 @@ class MergeAlgorithm:
                         p['status'] = 1
                         p['count'] += 1
                         p['id'] = path_id
-                    elif category == p.get('mpId') and p['status'] == 0:
-                        p['status'] = 1
-                        p['count'] += 1
-                        p['id'] = path_id
                 if specific_dic['status'] == 0:
                     specific_dic['status'] = 1
                     # 把首次覆盖到的API,放入user_list里面
@@ -105,10 +101,21 @@ class MergeAlgorithm:
             specific_dic['id'] = path_id
         else:
             if app_context.is_api_base_data:
-                specific_dic = {'url': user_url, 'desc': '', 'priority': None, 'count': 1, 'online': None, 'remark': None, 'status': 2, 'category': []}
-                specific_dic.get('category').append({'id': None, 'name': category, 'status': 2, 'count': 1})
+                specific_dic = {
+                    'url': user_url,
+                    'desc': '',
+                    'priority': None,
+                    'status': 2,
+                    'count': 1,
+                    'category': []
+                }
+                specific_dic['category'].append({
+                    'id': None,
+                    'name': category,
+                    'status': 2,
+                    'count': 1
+                })
             else:
-                # specific_dic = {'url': user_url, 'desc': '', 'priority': '', 'count': 1, 'status': 2, 'org': [org_url]}
                 specific_dic = {'url': user_url, 'desc': '', 'priority': None, 'count': 1, 'status': 2, 'id': path_id}
         # 插入到 index=0 的位置
         app_context.merge_list.insert(0, specific_dic)
