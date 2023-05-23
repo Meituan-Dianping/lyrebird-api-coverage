@@ -17,12 +17,21 @@ class ReportHandler:
             desc = 'N/A'
             count_flag = -1
             priority = -1
-        info_dict = {'url': url, 'desc': desc, 'priority': priority, 'count_flag': count_flag,
-                     'business': app_context.business, 'version_name': app_context.version_name,
-                     'version_code': app_context.version_code}
+        info_dict = {
+            'event':{
+                'coverage':{
+                    'url': url,
+                    'desc': desc,
+                    'priority': priority,
+                    'count_flag': count_flag,
+                    'version_name': app_context.version_name,
+                    'version_code': app_context.version_code
+                }
+            }
+        }
         if app_context.info.get(device_ip):
             # 如果有Device信息，就上报device相关的信息
-            info_dict.update(app_context.info.get(device_ip))
+            info_dict['event']['coverage'].update(app_context.info.get(device_ip))
         return info_dict
 
 
@@ -31,5 +40,5 @@ report_handler = ReportHandler()
 
 def report_worker(url, device_ip, category):
     update_data = report_handler.check_url_info(url, device_ip)
-    update_data.update({'action': 'api-coverage', 'user_info': app_context.user_info, 'category': category})
+    update_data.update({'channel': 'coverage', 'category': category})
     report(update_data)
