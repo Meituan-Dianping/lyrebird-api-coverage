@@ -39,5 +39,4 @@ report_handler = ReportHandler()
 
 def report_worker(url, device_ip, category):
     update_data = report_handler.check_url_info(url, device_ip, category)
-    update_data.update({'category': category})
     publish('coverage', update_data)
