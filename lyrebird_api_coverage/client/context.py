@@ -37,6 +37,10 @@ class Context:
         self.covtime = 0
         # 时间间隔，每隔指定时间触发1次socket io消息，防止刷新频繁
         self.SOCKET_PUSH_INTERVAL = 1
+        # 是否使用接口请求实时base数据
+        self.is_api_base_data = False
+        # category信息
+        self.category = ''
 
 
 # 单例模式

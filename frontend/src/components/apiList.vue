@@ -1,7 +1,15 @@
 <template>
   <div id="tab" class="box box-solid">
-    <div class="box-body" style="max-height:calc(100vh - 100px); overflow:auto">
-      <i-table stripe :columns="columns" :data="showedAPIData" ></i-table>
+    <div class="box-body" style="max-height:calc(100vh - 100px) overflow:auto">
+      <i-table stripe :columns="columns" :data="showedAPIData">
+        <template #category="{ row }">
+          <span v-if="row.category.length !== 0">
+            <span v-for="(item, index) in row.category" :key="index">
+              <Tag v-if="item.status == 1" color="green">{{item.label}}</Tag>
+            </span>
+          </span>
+        </template>
+      </i-table>
       <Modal
         v-model="isApiDetailModalShow"
         title="Flow Detail"
@@ -38,19 +46,16 @@ export default {
           title: 'Priority',
           key: 'priority',
           sortable: true,
-          width: 110,
         },
         {
           title: 'API',
           key: 'url',
           sortable: true,
-          width: 380,
         },
         {
           title: 'Description',
           key: 'desc',
           sortable: true,
-          width: 200,
         },
         {
           title: 'Count',
@@ -96,6 +101,12 @@ export default {
             }
             return row.status === null
           },
+        },
+        {
+          title: 'Category',
+          key: 'category',
+          slot: 'category',
+          sortable: true,
         },
         {
           title: 'Detail',

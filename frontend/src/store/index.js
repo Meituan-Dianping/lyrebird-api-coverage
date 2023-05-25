@@ -39,7 +39,7 @@ export default new Vuex.Store({
       apis
         .getCoverage()
         .then((response) => {
-          context.commit('setCoverageData', response.data)
+          context.commit('setCoverageData', response.data.coverage)
         })
         .catch(() => {
           this.$Notice.open({ title: 'loadCoverageData error!' })
