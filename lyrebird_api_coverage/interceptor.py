@@ -72,7 +72,7 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
         emit(req_starttime, path)
     # 如果不在base里，不需要merge到数据中
     else:
-        # mergeAlgorithm.merge_handler_new(path, path_id)
+        # mergeAlgorithm.merge_handler_new(path, path_id, category)
         # 进行上报
         report_worker(path, device_ip, category)
 
