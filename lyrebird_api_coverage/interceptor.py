@@ -8,6 +8,7 @@ from lyrebird_api_coverage.client.url_compare import compare_query
 from urllib.parse import urlparse
 
 logger = log.get_logger()
+block_list = application.config.get("apicoverage.block_list", [])
 import time
 
 def on_request(msg):
@@ -15,6 +16,9 @@ def on_request(msg):
     req_msg = msg['flow']
     logger.debug(req_msg)
     if not msg['flow']['request']['url']:
+        return
+    
+    if msg['flow']['request']['host'] in block_list:
         return
 
     # 获取handler_context.id，为前端展开看详情准备
@@ -47,7 +51,7 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
         flag = 0
         for item in ulr_list:
             if compare_query(item['url'], msg['flow']['request']['url']):
-                mergeAlgorithm.merge_handler_new(item['url_base'], path_id)
+                mergeAlgorithm.merge_handler_new(item['url_base'], path_id, category)
                 mergeAlgorithm.coverage_handler()
                 report_worker(item['url_base'], device_ip, category)
                 flag = 1
@@ -60,7 +64,7 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
             # 去重
             for p in list(set(params_list)):
                 # Todo 这里在初始化之后看一下
-                val = msg['flow']['request']['query'][p]
+                val = msg['flow']['request']['query'].get(p)
                 if url_pgroup:
                     url_pgroup = url_pgroup + '&' + str(p) + '=' + str(val)
                 else:
@@ -72,7 +76,7 @@ def coverage_judgment(path, path_id, device_ip, req_starttime, msg, category):
         emit(req_starttime, path)
     # 如果不在base里，不需要merge到数据中
     else:
-        # mergeAlgorithm.merge_handler_new(path, path_id)
+        # mergeAlgorithm.merge_handler_new(path, path_id, category)
         # 进行上报
         report_worker(path, device_ip, category)
 
