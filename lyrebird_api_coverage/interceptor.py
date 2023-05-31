@@ -8,16 +8,17 @@ from lyrebird_api_coverage.client.url_compare import compare_query
 from urllib.parse import urlparse
 
 logger = log.get_logger()
+block_list = application.config.get("apicoverage.block_list", [])
 import time
 
 def on_request(msg):
-    block_list = application.config.get("apicoverage.block_list", [])
-    if  msg['flow']['request']['host'] in block_list:
-        return
     req_starttime = time.time()
     req_msg = msg['flow']
     logger.debug(req_msg)
     if not msg['flow']['request']['url']:
+        return
+    
+    if msg['flow']['request']['host'] in block_list:
         return
 
     # 获取handler_context.id，为前端展开看详情准备
