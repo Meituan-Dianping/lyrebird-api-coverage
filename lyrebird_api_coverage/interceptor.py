@@ -11,6 +11,9 @@ logger = log.get_logger()
 import time
 
 def on_request(msg):
+    block_list = application.config.get("apicoverage.block_list", [])
+    if  msg['flow']['request']['host'] in block_list:
+        return
     req_starttime = time.time()
     req_msg = msg['flow']
     logger.debug(req_msg)
